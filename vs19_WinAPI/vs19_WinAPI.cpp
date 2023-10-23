@@ -50,31 +50,45 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
     // 단축키 테이블 정보 로딩
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_VS19WINAPI));
 
-    SetTimer(g_hwnd, 0, 0, nullptr);// 윈도우 핸들, 타이머ID, 지연시간(1000 = 1초, 0 = 프로그램이 허용하는 최단시간//pc성능에 따라 다름  ), 발생하는 함수주소
-
     MSG msg;
-    msg.message;
-    msg.lParam;
-    msg.hwnd; // 하나의 프로세스 안에서 창을 여러개 만들 수 있음 // 메세지를 받을 하나의 창
-    msg.pt;
-    msg.time;
-    // 메세지 구조체 메모리에 주소값 넘겨 GetMessage로 값 담아준다
-    // 
-    // 기본 메시지 루프입니다:
-    // 메세지 큐에서 메세지 확인할때까지 대기(while 문 무한루프)
-    // 포커싱되어있는 프로그램에 메세지 큐{ 다양한 이벤트들 ex) 클릭메세지(이벤트) }에 담아서 처리 
-    // 카톡, 그림판 열림 -> 그림판 포커싱 -> 메세지 큐 그림판 프로그램 담음 -> 클릭이벤트 -> 그림판 -> 드로우
-    while (GetMessage(&msg, nullptr, 0, 0))
-        // msg.message == WM_QUIT 일경우 false반환 -> 프로그램 종료(while 탈출)
+    // GetMessage : 메세지 큐에서 메세지 확인 될 때까지 대기, msg.message == WM_QUIT 이면 false 반환 -> 프로그램종료
+    // PeekMessage : 메세지 유무와 관계없이 반환 // 메세지가 있는지 보고 있지만 확인한 메세지가 있을경우 큐에서 제거 // 메세지가 없어도 반환되기에 while문 조건에 넣지 못함
+    //             : 메세지큐에서 메세지를 확인한 경우 true, 메세지가 없는 경우 false 반환 
+
+    DWORD dwPrevCount = GetTickCount();
+    DWORD dwAccCount = 0;
+    while (1) 
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) // TranslateAccelerator 단축키 // 리소스뷰의 Menu, Accelerator 폴더들 열어보자
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))// 반환시 메세지가 있으면 true, 없으면 false
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg); // 멀티스레드로 메세지 처리함수 실행
+            int iTime = GetTickCount();
+
+            if (WM_QUIT == msg.message)
+                break;
+
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) // TranslateAccelerator 단축키 // 리소스뷰의 Menu, Accelerator 폴더들 열어보자
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg); // 멀티스레드로 메세지 처리함수 실행
+            }
+
+            dwAccCount += (GetTickCount() - iTime);
+        }
+        else // 기존엔 timer로 강제 메세지큐를 실행했다면 메세지가 없어도 호출받을 수 있음 
+        {
+            DWORD dwCurCount = GetTickCount();
+            if (dwCurCount - dwPrevCount > 1000)
+            {
+                float fRatio = (float)dwAccCount / 1000.0f;
+
+                wchar_t szBuff[50] = {};
+                swprintf_s(szBuff, L"비율 : %f",fRatio); // 실수를 문자열로 바꿔줌
+                SetWindowText(g_hwnd, szBuff);// 윈도우 타이틀창
+
+                dwPrevCount = dwCurCount;
+            }
         }
     }
-
-    KillTimer(g_hwnd, 0); // 타이머 역시 커널 오브젝트 // 핸들러, 타이머 ID 넣어 명시해서 종료 
 
     return (int) msg.wParam;
 }
