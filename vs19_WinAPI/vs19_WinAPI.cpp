@@ -142,9 +142,26 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 int g_x = 0;
 int g_y = 0;
-POINT g_ptObjectPos = { 500,300 };
-POINT g_ptObjectScale = { 100,100 };
 
+
+#include <vector>
+using std::vector;
+
+struct tObjInfo
+{
+    POINT g_ptObjPos;
+    POINT g_ptObjScale;
+};
+
+vector<tObjInfo> g_vecInfo; // 힙메모리에서 오브젝트를 관리
+
+// 좌상단
+POINT g_ptLT;
+// 우하단
+POINT g_ptRB;
+
+bool bLBtnDown = false;
+int test = 0;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) // wParam = 키보드 입력 값 , LParam = 마우스 좌표 = 총 4바이트 // 2바이트씩 x,y 좌표 => 비트연산
 {
@@ -181,7 +198,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
-
+            //Rectangle(hdc,0,0,test,test);
+            //test++; // 크기가 계속 커지는것으로 봤을때 프레임마다 업데이트 되고있음
 
             // 직접 Pen, Brush을 만들어서 DC에 지급
             HPEN hRedPen = CreatePen(PS_SOLID, 5, RGB(255, 0, 0));
@@ -192,16 +210,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             HPEN hDefaultPen = (HPEN)SelectObject(hdc, hRedPen); 
             HBRUSH hDefaultBrush = (HBRUSH)SelectObject(hdc, hBlueBrush);
 
-
-            Rectangle(hdc, 
-                g_ptObjectPos.x - g_ptObjectScale.x / 2, 
-                g_ptObjectPos.y - g_ptObjectScale.y / 2, 
-                g_ptObjectPos.x + g_ptObjectScale.x / 2,
-                g_ptObjectPos.y + g_ptObjectScale.y / 2); //변경된 Pen, Brush으로 사각형 그리기
-
+            if (bLBtnDown)
+            {
+                Rectangle(hdc,
+                    g_ptLT.x, g_ptLT.y,
+                    g_ptRB.x, g_ptRB.y); //변경된 Pen, Brush으로 사각형 그리기
+            }
             // 여기서 픽셀하나하나는 메모리이다. 버퍼에 값을 저장해놓은 후 눈에 보이는 GUI를 표현
             // 픽셀당 3바이트(rgb) : 1920* 1080  = 6,220,800 바이트 (한 화면을 구성하는 메모리)
 
+
+
+            // 추가된 사각형 그리기 => 화면이 매우 깜빡거린다=> 호출속도의 문제가 아닌 우리가 인식하는 프레임 타이밍의 문제
+            for (size_t i = 0; i < g_vecInfo.size(); ++i)
+            {
+                Rectangle(hdc,
+                    g_vecInfo[i].g_ptObjPos.x - g_vecInfo[i].g_ptObjScale.x / 2,
+                    g_vecInfo[i].g_ptObjPos.y - g_vecInfo[i].g_ptObjScale.y / 2,
+                    g_vecInfo[i].g_ptObjPos.x + g_vecInfo[i].g_ptObjScale.x / 2,
+                    g_vecInfo[i].g_ptObjPos.y + g_vecInfo[i].g_ptObjScale.y / 2);
+            }
 
             // DC의 Pen, Brush을 원래 펜으로 되돌림
             SelectObject(hdc, hDefaultPen);
@@ -233,26 +261,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             {
             case VK_UP: 
                 {
-                    g_ptObjectPos.y -= 10; // 드로우가 변경할때마다 업데이트 되지 않는다 => 무효화영역발생때만 드로우 해라는 명령이기때문
+                    //g_ptObjectPos.y -= 10; // 드로우가 변경할때마다 업데이트 되지 않는다 => 무효화영역발생때만 드로우 해라는 명령이기때문
                     InvalidateRect(hWnd,nullptr, true); // 강제로 무효화 영역이 발생했다는 이벤트만듦 // 핸들러 지정, 전체영역(nullptr) , 기존영역 지울지 여부(버퍼에 메모리 남아있어서) = true
                 }
                 break;
             case VK_DOWN:
                 {
-                    g_ptObjectPos.y += 10;
+                    //g_ptObjectPos.y += 10;
                     InvalidateRect(hWnd, nullptr, true);
                 }
                 break; 
 
             case VK_LEFT:
                 {
-                    g_ptObjectPos.x -= 10; 
+                    //g_ptObjectPos.x -= 10; 
                     InvalidateRect(hWnd, nullptr, true); 
                 }
                 break;
             case VK_RIGHT:
                 {
-                    g_ptObjectPos.x += 10; 
+                    //g_ptObjectPos.x += 10; 
                     InvalidateRect(hWnd, nullptr, true);
                 }
                 break;
@@ -264,13 +292,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
     case WM_LBUTTONDOWN:
         {
-            g_x = LOWORD(lParam);
-            g_y = HIWORD(lParam);
-
-
+            g_ptLT.x = LOWORD(lParam);
+            g_ptLT.y = HIWORD(lParam);
+            bLBtnDown = true;
         }
         break;
+    case WM_MOUSEMOVE:
+        {
+            g_ptRB.x = LOWORD(lParam);
+            g_ptRB.y = HIWORD(lParam);
+            InvalidateRect(hWnd, nullptr, true);
+        }
+        break;
+    case WM_LBUTTONUP:
+    {
+        tObjInfo info = {};
+        info.g_ptObjPos.x = (g_ptLT.x + g_ptRB.x) / 2;
+        info.g_ptObjPos.y = (g_ptLT.y + g_ptRB.y) / 2;
 
+        info.g_ptObjScale.x = abs(g_ptLT.x - g_ptRB.x);
+        info.g_ptObjScale.y = abs(g_ptLT.y - g_ptRB.y);
+
+        g_vecInfo.push_back(info);
+
+        bLBtnDown = false;
+        InvalidateRect(hWnd, nullptr, true);
+    }
+    break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
