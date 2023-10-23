@@ -142,6 +142,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 int g_x = 0;
 int g_y = 0;
+POINT g_ptObjectPos = { 500,300 };
+POINT g_ptObjectScale = { 100,100 };
+
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) // wParam = 키보드 입력 값 , LParam = 마우스 좌표 = 총 4바이트 // 2바이트씩 x,y 좌표 => 비트연산
 {
@@ -190,7 +193,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             HBRUSH hDefaultBrush = (HBRUSH)SelectObject(hdc, hBlueBrush);
 
 
-            Rectangle(hdc, 10, 10, 110, 110); //변경된 Pen, Brush으로 사각형 그리기
+            Rectangle(hdc, 
+                g_ptObjectPos.x - g_ptObjectScale.x / 2, 
+                g_ptObjectPos.y - g_ptObjectScale.y / 2, 
+                g_ptObjectPos.x + g_ptObjectScale.x / 2,
+                g_ptObjectPos.y + g_ptObjectScale.y / 2); //변경된 Pen, Brush으로 사각형 그리기
 
             // 여기서 픽셀하나하나는 메모리이다. 버퍼에 값을 저장해놓은 후 눈에 보이는 GUI를 표현
             // 픽셀당 3바이트(rgb) : 1920* 1080  = 6,220,800 바이트 (한 화면을 구성하는 메모리)
@@ -220,19 +227,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         }
         break;
 
-    case WM_KEYDOWN: // 입력 이벤트 테스트 중단점 걸며 확인해보기
+    case WM_KEYDOWN: // 계속 누르고 있을 경우 1~2초 간격두고 움직임(시간간격 두고 누르고 있는지 파악 후 이벤트 지속발생)
         {
             switch (wParam)
             {
             case VK_UP: 
-            {
-                int a = 0;
-            }
-                    break;
-            case 'W':
-            {
-                int b = 0;
-            }
+                {
+                    g_ptObjectPos.y -= 10; // 드로우가 변경할때마다 업데이트 되지 않는다 => 무효화영역발생때만 드로우 해라는 명령이기때문
+                    InvalidateRect(hWnd,nullptr, true); // 강제로 무효화 영역이 발생했다는 이벤트만듦 // 핸들러 지정, 전체영역(nullptr) , 기존영역 지울지 여부(버퍼에 메모리 남아있어서) = true
+                }
+                break;
+            case VK_DOWN:
+                {
+                    g_ptObjectPos.y += 10;
+                    InvalidateRect(hWnd, nullptr, true);
+                }
+                break; 
+
+            case VK_LEFT:
+                {
+                    g_ptObjectPos.x -= 10; 
+                    InvalidateRect(hWnd, nullptr, true); 
+                }
+                break;
+            case VK_RIGHT:
+                {
+                    g_ptObjectPos.x += 10; 
+                    InvalidateRect(hWnd, nullptr, true);
+                }
                 break;
             default:
                 break;
@@ -244,6 +266,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         {
             g_x = LOWORD(lParam);
             g_y = HIWORD(lParam);
+
+
         }
         break;
 
