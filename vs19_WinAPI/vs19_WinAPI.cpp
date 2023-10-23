@@ -34,6 +34,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
 
     // TODO: 여기에 코드를 입력합니다.
 
+
+
+
+
+
     // 전역 문자열을 초기화합니다. // szTitle, szWindowClass 에 정보넣기
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_VS19WINAPI, szWindowClass, MAX_LOADSTRING);
@@ -54,15 +59,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
     // GetMessage : 메세지 큐에서 메세지 확인 될 때까지 대기, msg.message == WM_QUIT 이면 false 반환 -> 프로그램종료
     // PeekMessage : 메세지 유무와 관계없이 반환 // 메세지가 있는지 보고 있지만 확인한 메세지가 있을경우 큐에서 제거 // 메세지가 없어도 반환되기에 while문 조건에 넣지 못함
     //             : 메세지큐에서 메세지를 확인한 경우 true, 메세지가 없는 경우 false 반환 
+    // 메세지큐 이벤트 : 포커싱 되어있지 않은 경우 메세지 큐가 들어오지 않음 => 비동기 이벤트로 변경
 
-    DWORD dwPrevCount = GetTickCount();
-    DWORD dwAccCount = 0;
-    while (1) 
+    while (true) 
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))// 반환시 메세지가 있으면 true, 없으면 false
         {
-            int iTime = GetTickCount();
-
             if (WM_QUIT == msg.message)
                 break;
 
@@ -72,21 +74,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
                 DispatchMessage(&msg); // 멀티스레드로 메세지 처리함수 실행
             }
 
-            dwAccCount += (GetTickCount() - iTime);
         }
         else // 기존엔 timer로 강제 메세지큐를 실행했다면 메세지가 없어도 호출받을 수 있음 
         {
-            DWORD dwCurCount = GetTickCount();
-            if (dwCurCount - dwPrevCount > 1000)
-            {
-                float fRatio = (float)dwAccCount / 1000.0f;
-
-                wchar_t szBuff[50] = {};
-                swprintf_s(szBuff, L"비율 : %f",fRatio); // 실수를 문자열로 바꿔줌
-                SetWindowText(g_hwnd, szBuff);// 윈도우 타이틀창
-
-                dwPrevCount = dwCurCount;
-            }
+            
+            // Game 코드 수행
+            // 디자인패턴 : 싱글톤 패턴
         }
     }
 
