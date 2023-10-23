@@ -8,6 +8,7 @@
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
+HWND      g_hwnd; // 메인 윈도우 핸들
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
@@ -49,6 +50,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
     // 단축키 테이블 정보 로딩
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_VS19WINAPI));
 
+    SetTimer(g_hwnd, 0, 0, nullptr);// 윈도우 핸들, 타이머ID, 지연시간(1000 = 1초, 0 = 프로그램이 허용하는 최단시간//pc성능에 따라 다름  ), 발생하는 함수주소
+
     MSG msg;
     msg.message;
     msg.lParam;
@@ -70,6 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
             DispatchMessage(&msg); // 멀티스레드로 메세지 처리함수 실행
         }
     }
+
+    KillTimer(g_hwnd, 0); // 타이머 역시 커널 오브젝트 // 핸들러, 타이머 ID 넣어 명시해서 종료 
 
     return (int) msg.wParam;
 }
@@ -116,16 +121,16 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+   g_hwnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-   if (!hWnd)
+   if (!g_hwnd)
    {
       return FALSE;
    }
 
-   ShowWindow(hWnd, nCmdShow);// ID를 받은 윈도우 객체(핸들러)를 보이게(true), 안보이게(false) 해라
-   UpdateWindow(hWnd);
+   ShowWindow(g_hwnd, nCmdShow);// ID를 받은 윈도우 객체(핸들러)를 보이게(true), 안보이게(false) 해라
+   UpdateWindow(g_hwnd);
 
    return TRUE;
 }
@@ -165,7 +170,7 @@ int test = 0;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) // wParam = 키보드 입력 값 , LParam = 마우스 좌표 = 총 4바이트 // 2바이트씩 x,y 좌표 => 비트연산
 {
-    switch (message)
+    switch (message) // 메세지가 없으면 화면을 그리지 않는다는 문제 => 강제로 메세지를 발생시키는 방법 => 핸들러 전역변수로 설정 후 타이머호출
     {
     case WM_COMMAND:
         {
@@ -221,7 +226,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 
 
-            // 추가된 사각형 그리기 => 화면이 매우 깜빡거린다=> 호출속도의 문제가 아닌 우리가 인식하는 프레임 타이밍의 문제
+            // 추가된 사각형 그리기 => 화면이 매우 깜빡거린다=> 호출속도의 문제가 아닌 사각형이 만들어지는과정에 대한 우리가 인식하는 프레임 타이밍의 문제
+            // =>백그라운드에 다그리고 나서 화면을 바꿔치기하는 방법으로 해결
             for (size_t i = 0; i < g_vecInfo.size(); ++i)
             {
                 Rectangle(hdc,
@@ -319,6 +325,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         InvalidateRect(hWnd, nullptr, true);
     }
     break;
+
+    case WM_TIMER:
+        {
+        int a = 0;
+        }
+        break;
+
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
