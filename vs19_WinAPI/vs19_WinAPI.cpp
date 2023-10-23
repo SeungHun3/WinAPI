@@ -175,9 +175,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
-            Rectangle(hdc, 10, 10, 110, 110); //사각형 그리기
+
+
+            // 직접 Pen, Brush을 만들어서 DC에 지급
+            HPEN hRedPen = CreatePen(PS_SOLID, 5, RGB(255, 0, 0));
+            HBRUSH hBlueBrush = CreateSolidBrush(RGB(0, 0, 255));
+
+            // SelectObject함수가 범용적이라 brush, pen .. 여러 방면으로 사용됨 => 캐스팅 필수
+            // 기본 Pen, Brush ID값을 Default로 받아둠
+            HPEN hDefaultPen = (HPEN)SelectObject(hdc, hRedPen); 
+            HBRUSH hDefaultBrush = (HBRUSH)SelectObject(hdc, hBlueBrush);
+
+
+            Rectangle(hdc, 10, 10, 110, 110); //변경된 Pen, Brush으로 사각형 그리기
+
             // 여기서 픽셀하나하나는 메모리이다. 버퍼에 값을 저장해놓은 후 눈에 보이는 GUI를 표현
             // 픽셀당 3바이트(rgb) : 1920* 1080  = 6,220,800 바이트 (한 화면을 구성하는 메모리)
+
+
+            // DC의 Pen, Brush을 원래 펜으로 되돌림
+            SelectObject(hdc, hDefaultPen);
+            SelectObject(hdc, hDefaultBrush);
+
+            //다쓴 RedPen, BlueBrush 삭제요청
+            DeleteObject(hRedPen); 
+            DeleteObject(hBlueBrush);
+
+
             
             EndPaint(hWnd, &ps);
             //그리고 나서 주소 해제
