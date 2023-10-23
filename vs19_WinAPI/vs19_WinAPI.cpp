@@ -124,7 +124,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   ShowWindow(hWnd, nCmdShow);
+   ShowWindow(hWnd, nCmdShow);// ID를 받은 윈도우 객체(핸들러)를 보이게(true), 안보이게(false) 해라
    UpdateWindow(hWnd);
 
    return TRUE;
@@ -161,14 +161,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_PAINT:
+    case WM_PAINT: // 무효화 영역이 발생한경우 
+        // 예전엔 화면데이터가 비트맵구조로 되어있어 다른프로그램이 실행되며 창이 가려진 부분이 생기고 다시 포커싱하면 생겨나는 부분이 무효화영역이었음
+        // 현재는 프로그램을 최소화하여 아예 보이지 않게했다가 다시 프로그램을 포커싱하면 무효화영역이 발생
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
+            // init instance 로 윈도우를 만들어놓은 객체(윈도우 핸들)를 PAINTSTRUCT 주소에 넘김
+            //HDC; // Device Context 란 그리기 동작을 할 수 있게 그리기 작업을 수행하는데 필요한 데이터의 집합체
+            //DC의 목적지는 hWnd
+            //DC의 기본펜 = black
+            //DC의 기본 브러쉬는 White
+            
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
             Rectangle(hdc, 10, 10, 110, 110); //사각형 그리기
+            // 여기서 픽셀하나하나는 메모리이다. 버퍼에 값을 저장해놓은 후 눈에 보이는 GUI를 표현
+            // 픽셀당 3바이트(rgb) : 1920* 1080  = 6,220,800 바이트 (한 화면을 구성하는 메모리)
+            
             EndPaint(hWnd, &ps);
+            //그리고 나서 주소 해제
+
+            /* 같은 프로그램의 커널 오브젝트를 여러 구조체(여러 ID값)로 구분지어 놓은 이유 => 개발적으로 구분지어 편하게 사용하기 위한 용도(실수방지)
+            * 
+            HWND; // 윈도우라는 커널오브젝트 ID값을 받기 위한 값
+            HPEN; // PEN이라는 커널 오브젝트 ID값을 받기 위한 값
+            HBRUSH;// BRUSH라는 커널 오브젝트 ID값을 받기 위한 값 
+            HDC; // Device Context 커널 오브젝트 ID값을 받기 위한 값
+            */
+
         }
         break;
     case WM_DESTROY:
