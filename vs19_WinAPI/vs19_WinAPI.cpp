@@ -140,7 +140,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+int g_x = 0;
+int g_y = 0;
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) // wParam = 키보드 입력 값 , LParam = 마우스 좌표 = 총 4바이트 // 2바이트씩 x,y 좌표 => 비트연산
 {
     switch (message)
     {
@@ -216,6 +219,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         }
         break;
+
+    case WM_KEYDOWN: // 입력 이벤트 테스트 중단점 걸며 확인해보기
+        {
+            switch (wParam)
+            {
+            case VK_UP: 
+            {
+                int a = 0;
+            }
+                    break;
+            case 'W':
+            {
+                int b = 0;
+            }
+                break;
+            default:
+                break;
+            }
+        }
+        break;
+
+    case WM_LBUTTONDOWN:
+        {
+            g_x = LOWORD(lParam);
+            g_y = HIWORD(lParam);
+        }
+        break;
+
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
