@@ -41,8 +41,8 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 	m_hDC = GetDC(m_hwnd);
 
 	// 오브젝트 초기화 : 해상도 / 2 =>화면중앙
-	g_obj.m_ptPos = POINT{ m_ptResolution.x / 2 , m_ptResolution.y / 2 };
-	g_obj.m_ptScale = POINT{ 100,100 };
+	g_obj.SetPos(Vec2((float)(m_ptResolution.x / 2), (float)(m_ptResolution.y / 2) ));
+	g_obj.SetScale(Vec2(100, 100));
 
 
 	return S_OK;
@@ -52,17 +52,17 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 
 void CCore::progress()
 {
-	static int callcount = 0;
-	++callcount;
-	static int iPrevCount = GetTickCount();
-
-	int iCurCount = GetTickCount();
-
-	if (iCurCount - iPrevCount > 1000) // 1초 차이가 났을때 
-	{
-		iPrevCount = iCurCount; // 중단점걸어 호출카운팅했을때 callcount = 13만번 => 1초에 13만번 호출
-		callcount = 0;
-	}
+	//static int callcount = 0;
+	//++callcount;
+	//static int iPrevCount = GetTickCount();
+	//
+	//int iCurCount = GetTickCount();
+	//
+	//if (iCurCount - iPrevCount > 1000) // 1초 차이가 났을때 
+	//{
+	//	iPrevCount = iCurCount; // 중단점걸어 호출카운팅했을때 callcount = 13만번 => 1초에 13만번 호출
+	//	callcount = 0;
+	//}
 
 
 	Update();
@@ -78,25 +78,30 @@ void CCore::Update()
 	//동기화에 대한 문제 생각하며 설계필요
 	
 	//GetAsyncKeyState(VK_LEFT); // 키가 눌렸는지 => 키의 상태값 비트 조합 후 반환
+	Vec2 vPos = g_obj.GetPos();
+
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000) // 비트연산: 키가 눌렸는지 확인
 	{
-		g_obj.m_ptPos.x -= 1;
+		vPos.x -= 0.01f;
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
-		g_obj.m_ptPos.x += 1;
+		vPos.x += 0.01f;
 	}
-
+	g_obj.SetPos(vPos);
 }
 
 void CCore::Render()
 {
 	// 그리기
 	// 오브젝트 하나하나마다 그리고 있는 과정을 보여주는게 아닌 모두 다 그렸을때 보여주는화면으로 바꿔줘야함
-	Rectangle(m_hDC, g_obj.m_ptPos.x - g_obj.m_ptScale.x /2
-		, g_obj.m_ptPos.y - g_obj.m_ptScale.y / 2
-		, g_obj.m_ptPos.x + g_obj.m_ptScale.x / 2
-		, g_obj.m_ptPos.y + g_obj.m_ptScale.y / 2);
+
+	Vec2 vPos = g_obj.GetPos();
+	Vec2 vScale = g_obj.GetScale();
+	Rectangle(m_hDC, int(vPos.x - vScale.x /2.f)
+				   , int(vPos.y - vScale.y / 2.f)
+				   , int(vPos.x + vScale.x / 2.f)
+				   , int(vPos.y + vScale.y / 2.f));
 
 }
 

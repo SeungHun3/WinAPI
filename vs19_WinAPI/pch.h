@@ -6,4 +6,7 @@
 // 참조하지 않으면 컴파일 에러
 // 모두가 미리 컴파일된 공통된 헤더를 참조하고 있어 컴파일 속도가 올라감
 #include <windows.h>
+#include <iostream>
+
 #include "define.h"
+#include "struct.h"
