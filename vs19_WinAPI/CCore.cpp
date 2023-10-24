@@ -88,6 +88,7 @@ void CCore::progress()
 
 	// Manager Update
 	CTimeMgr::GetInst()->update();
+	CKeyMgr::GetInst()->update();
 
 	Update();
 	
@@ -104,11 +105,11 @@ void CCore::Update()
 	//GetAsyncKeyState(VK_LEFT); // 키가 눌렸는지 => 키의 상태값 비트 조합 후 반환
 	Vec2 vPos = g_obj.GetPos();
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000) // 비트연산: 키가 눌렸는지 확인
+	if (CKeyMgr::GetInst()->GetKeyState(KEY::LEFT) == KEY_STATE::HOLD)
 	{
-		vPos.x -= 200.f * CTimeMgr::GetInst()->GetfDT();
+		vPos.x -= 200.f* CTimeMgr::GetInst()->GetfDT();
 	}
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY::RIGHT) == KEY_STATE::HOLD)
 	{
 		vPos.x += 200.f * CTimeMgr::GetInst()->GetfDT();
 	}
