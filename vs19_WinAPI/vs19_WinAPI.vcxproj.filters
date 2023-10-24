@@ -17,6 +17,12 @@
     <Filter Include="Engine\01.Header">
       <UniqueIdentifier>{f584e00c-c5f0-49c2-ab1d-c54fd0213cc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03.Manager">
+      <UniqueIdentifier>{a4060929-3b0b-446e-9ceb-bdeebdef2bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\KeyMgr">
+      <UniqueIdentifier>{5b7bfecc-317c-41cb-bd54-7aa635cb84c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -34,6 +40,13 @@
     <ClInclude Include="vs19_WinAPI.h">
       <Filter>Default</Filter>
     </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CKeyMgr.h">
+      <Filter>Engine\03.Manager\KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vs19_WinAPI.rc">
@@ -52,8 +65,9 @@
     <ClCompile Include="CCore.cpp">
       <Filter>Engine\02. Core</Filter>
     </ClCompile>
-    <ClCompile Include="vs19_WinAPI.cpp">
-      <Filter>Default</Filter>
+    <ClCompile Include="CKeyMgr.cpp">
+      <Filter>Engine\03.Manager\KeyMgr</Filter>
     </ClCompile>
+    <ClCompile Include="vs19_WinAPI.cpp" />
   </ItemGroup>
 </Project>

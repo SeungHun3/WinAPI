@@ -1,8 +1,10 @@
 ﻿// vs19_WinAPI.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
-
+#include "pch.h"
 #include "framework.h"
 #include "vs19_WinAPI.h"
+
+#include "CCore.h" // 프로그램의 핵심역할로 설계 중..
 
 #define MAX_LOADSTRING 100
 
@@ -35,10 +37,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
     // TODO: 여기에 코드를 입력합니다.
 
 
-
-
-
-
     // 전역 문자열을 초기화합니다. // szTitle, szWindowClass 에 정보넣기
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_VS19WINAPI, szWindowClass, MAX_LOADSTRING);
@@ -51,6 +49,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
     {
         return FALSE;
     }
+
+    // Core 초기화
+
+    if (FAILED(CCore::GetInst()->init()))
+    {
+        MessageBox(nullptr, L"Core 객체 초기화 실패", L"ERROR", MB_OK);
+        return FALSE;
+    }
+
+    
+
 
     // 단축키 테이블 정보 로딩
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_VS19WINAPI));
