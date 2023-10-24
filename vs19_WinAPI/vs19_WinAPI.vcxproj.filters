@@ -26,6 +26,9 @@
     <Filter Include="Engine\04.Object">
       <UniqueIdentifier>{f3636d60-7608-481f-aba9-97520f98ab48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03.Manager\TimeMgr">
+      <UniqueIdentifier>{1ac6a0a4-dad2-4b68-a757-54d9cba72f1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -56,6 +59,9 @@
     <ClInclude Include="struct.h">
       <Filter>Engine\01.Header</Filter>
     </ClInclude>
+    <ClInclude Include="CTimeMgr.h">
+      <Filter>Engine\03.Manager\TimeMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vs19_WinAPI.rc">
@@ -80,6 +86,9 @@
     <ClCompile Include="vs19_WinAPI.cpp" />
     <ClCompile Include="CObject.cpp">
       <Filter>Engine\04.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTimeMgr.cpp">
+      <Filter>Engine\03.Manager\TimeMgr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

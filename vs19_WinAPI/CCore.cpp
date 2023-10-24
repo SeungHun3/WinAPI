@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "CCore.h"
 
+#include "CTimeMgr.h"
+#include "CKeyMgr.h"
+
 #include "CObject.h"
 
 
@@ -40,6 +43,11 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 	
 	m_hDC = GetDC(m_hwnd);
 
+	// Manager 초기화
+	CTimeMgr::GetInst()->init();
+	CKeyMgr::GetInst()->init();
+
+
 	// 오브젝트 초기화 : 해상도 / 2 =>화면중앙
 	g_obj.SetPos(Vec2((float)(m_ptResolution.x / 2), (float)(m_ptResolution.y / 2) ));
 	g_obj.SetScale(Vec2(100, 100));
@@ -65,6 +73,9 @@ void CCore::progress()
 	//}
 
 
+	// Manager Update
+	CTimeMgr::GetInst()->update();
+
 	Update();
 	
 	Render();
@@ -82,11 +93,11 @@ void CCore::Update()
 
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000) // 비트연산: 키가 눌렸는지 확인
 	{
-		vPos.x -= 0.01f;
+		vPos.x -= 200.f * CTimeMgr::GetInst()->GetfDT();
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
-		vPos.x += 0.01f;
+		vPos.x += 200.f * CTimeMgr::GetInst()->GetfDT();
 	}
 	g_obj.SetPos(vPos);
 }
