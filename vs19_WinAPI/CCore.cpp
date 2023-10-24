@@ -3,7 +3,7 @@
 
 #include "CTimeMgr.h"
 #include "CKeyMgr.h"
-
+#include "CSceneMgr.h"
 #include "CObject.h"
 
 
@@ -59,7 +59,7 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 	// Manager 초기화
 	CTimeMgr::GetInst()->init();
 	CKeyMgr::GetInst()->init();
-
+	CSceneMgr::GetInst()->init();
 
 	// 오브젝트 초기화 : 해상도 / 2 =>화면중앙
 	g_obj.SetPos(Vec2((float)(m_ptResolution.x / 2), (float)(m_ptResolution.y / 2) ));
@@ -89,7 +89,7 @@ void CCore::progress()
 	// Manager Update
 	CTimeMgr::GetInst()->update();
 	CKeyMgr::GetInst()->update();
-
+	
 	Update();
 	
 	Render();
