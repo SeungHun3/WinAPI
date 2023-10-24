@@ -52,7 +52,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
 
     // Core 초기화
 
-    if (FAILED(CCore::GetInst()->init()))
+    if (FAILED(CCore::GetInst()->init(g_hwnd, POINT{1280,768})))
     {
         MessageBox(nullptr, L"Core 객체 초기화 실패", L"ERROR", MB_OK);
         return FALSE;
@@ -84,11 +84,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
             }
 
         }
+        //메세지가 발생하지 않는 대부분의 시간
         else // 기존엔 timer로 강제 메세지큐를 실행했다면 메세지가 없어도 호출받을 수 있음 
         {
-            
             // Game 코드 수행
-            // 디자인패턴 : 싱글톤 패턴
+            // 디자인패턴 : 싱글톤
+            CCore::GetInst()->progress();
+
+
         }
     }
 
@@ -96,12 +99,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
 }
 
 
-
-//
-//  함수: MyRegisterClass()
-//
-//  용도: 창 클래스를 등록합니다.
-//
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
     WNDCLASSEXW wcex; // 구조체 내용에 각각 초기화
@@ -123,16 +120,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     return RegisterClassExW(&wcex); // 윈도우에서 실제 실행되는 코드(숨김처리되어있음)
 }
 
-//
-//   함수: InitInstance(HINSTANCE, int)
-//
-//   용도: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
-//
-//   주석:
-//
-//        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
-//        주 프로그램 창을 만든 다음 표시합니다.
-//
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
@@ -151,42 +138,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-//
-//  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  용도: 주 창의 메시지를 처리합니다.
-//
-//  WM_COMMAND  - 애플리케이션 메뉴를 처리합니다.
-//  WM_PAINT    - 주 창을 그립니다.
-//  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
-//
-//
-int g_x = 0;
-int g_y = 0;
-
-
-#include <vector>
-using std::vector;
-
-struct tObjInfo
-{
-    POINT g_ptObjPos;
-    POINT g_ptObjScale;
-};
-
-vector<tObjInfo> g_vecInfo; // 힙메모리에서 오브젝트를 관리
-
-// 좌상단
-POINT g_ptLT;
-// 우하단
-POINT g_ptRB;
-
-bool bLBtnDown = false;
-int test = 0;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) // wParam = 키보드 입력 값 , LParam = 마우스 좌표 = 총 4바이트 // 2바이트씩 x,y 좌표 => 비트연산
 {
-    switch (message) // 메세지가 없으면 화면을 그리지 않는다는 문제 => 강제로 메세지를 발생시키는 방법 => 핸들러 전역변수로 설정 후 타이머호출
+    switch (message) // 메세지가 없으면 화면을 그리지 않는다는 문제 => 강제로 메세지를 발생시키는 방법: 핸들러 전역변수로 설정 -> 타이머호출 or PeekMessage 호출
     {
     case WM_COMMAND:
         {
@@ -206,145 +161,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         }
         break;
     case WM_PAINT: // 무효화 영역이 발생한경우 
-        // 예전엔 화면데이터가 비트맵구조로 되어있어 다른프로그램이 실행되며 창이 가려진 부분이 생기고 다시 포커싱하면 생겨나는 부분이 무효화영역이었음
-        // 현재는 프로그램을 최소화하여 아예 보이지 않게했다가 다시 프로그램을 포커싱하면 무효화영역이 발생
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // init instance 로 윈도우를 만들어놓은 객체(윈도우 핸들)를 PAINTSTRUCT 주소에 넘김
-            //HDC; // Device Context 란 그리기 동작을 할 수 있게 그리기 작업을 수행하는데 필요한 데이터의 집합체
-            //DC의 목적지는 hWnd
-            //DC의 기본펜 = black
-            //DC의 기본 브러쉬는 White
             
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
-            //Rectangle(hdc,0,0,test,test);
-            //test++; // 크기가 계속 커지는것으로 봤을때 프레임마다 업데이트 되고있음
-
-            // 직접 Pen, Brush을 만들어서 DC에 지급
-            HPEN hRedPen = CreatePen(PS_SOLID, 5, RGB(255, 0, 0));
-            HBRUSH hBlueBrush = CreateSolidBrush(RGB(0, 0, 255));
-
-            // SelectObject함수가 범용적이라 brush, pen .. 여러 방면으로 사용됨 => 캐스팅 필수
-            // 기본 Pen, Brush ID값을 Default로 받아둠
-            HPEN hDefaultPen = (HPEN)SelectObject(hdc, hRedPen); 
-            HBRUSH hDefaultBrush = (HBRUSH)SelectObject(hdc, hBlueBrush);
-
-            if (bLBtnDown)
-            {
-                Rectangle(hdc,
-                    g_ptLT.x, g_ptLT.y,
-                    g_ptRB.x, g_ptRB.y); //변경된 Pen, Brush으로 사각형 그리기
-            }
-            // 여기서 픽셀하나하나는 메모리이다. 버퍼에 값을 저장해놓은 후 눈에 보이는 GUI를 표현
-            // 픽셀당 3바이트(rgb) : 1920* 1080  = 6,220,800 바이트 (한 화면을 구성하는 메모리)
 
 
-
-            // 추가된 사각형 그리기 => 화면이 매우 깜빡거린다=> 호출속도의 문제가 아닌 사각형이 만들어지는과정에 대한 우리가 인식하는 프레임 타이밍의 문제
-            // =>백그라운드에 다그리고 나서 화면을 바꿔치기하는 방법으로 해결
-            for (size_t i = 0; i < g_vecInfo.size(); ++i)
-            {
-                Rectangle(hdc,
-                    g_vecInfo[i].g_ptObjPos.x - g_vecInfo[i].g_ptObjScale.x / 2,
-                    g_vecInfo[i].g_ptObjPos.y - g_vecInfo[i].g_ptObjScale.y / 2,
-                    g_vecInfo[i].g_ptObjPos.x + g_vecInfo[i].g_ptObjScale.x / 2,
-                    g_vecInfo[i].g_ptObjPos.y + g_vecInfo[i].g_ptObjScale.y / 2);
-            }
-
-            // DC의 Pen, Brush을 원래 펜으로 되돌림
-            SelectObject(hdc, hDefaultPen);
-            SelectObject(hdc, hDefaultBrush);
-
-            //다쓴 RedPen, BlueBrush 삭제요청
-            DeleteObject(hRedPen); 
-            DeleteObject(hBlueBrush);
-
-
-            
             EndPaint(hWnd, &ps);
-            //그리고 나서 주소 해제
-
-            /* 같은 프로그램의 커널 오브젝트를 여러 구조체(여러 ID값)로 구분지어 놓은 이유 => 개발적으로 구분지어 편하게 사용하기 위한 용도(실수방지)
-            * 
-            HWND; // 윈도우라는 커널오브젝트 ID값을 받기 위한 값
-            HPEN; // PEN이라는 커널 오브젝트 ID값을 받기 위한 값
-            HBRUSH;// BRUSH라는 커널 오브젝트 ID값을 받기 위한 값 
-            HDC; // Device Context 커널 오브젝트 ID값을 받기 위한 값
-            */
-
         }
         break;
 
     case WM_KEYDOWN: // 계속 누르고 있을 경우 1~2초 간격두고 움직임(시간간격 두고 누르고 있는지 파악 후 이벤트 지속발생)
         {
-            switch (wParam)
-            {
-            case VK_UP: 
-                {
-                    //g_ptObjectPos.y -= 10; // 드로우가 변경할때마다 업데이트 되지 않는다 => 무효화영역발생때만 드로우 해라는 명령이기때문
-                    InvalidateRect(hWnd,nullptr, true); // 강제로 무효화 영역이 발생했다는 이벤트만듦 // 핸들러 지정, 전체영역(nullptr) , 기존영역 지울지 여부(버퍼에 메모리 남아있어서) = true
-                }
-                break;
-            case VK_DOWN:
-                {
-                    //g_ptObjectPos.y += 10;
-                    InvalidateRect(hWnd, nullptr, true);
-                }
-                break; 
-
-            case VK_LEFT:
-                {
-                    //g_ptObjectPos.x -= 10; 
-                    InvalidateRect(hWnd, nullptr, true); 
-                }
-                break;
-            case VK_RIGHT:
-                {
-                    //g_ptObjectPos.x += 10; 
-                    InvalidateRect(hWnd, nullptr, true);
-                }
-                break;
-            default:
-                break;
-            }
+            
         }
         break;
 
     case WM_LBUTTONDOWN:
         {
-            g_ptLT.x = LOWORD(lParam);
-            g_ptLT.y = HIWORD(lParam);
-            bLBtnDown = true;
         }
         break;
     case WM_MOUSEMOVE:
         {
-            g_ptRB.x = LOWORD(lParam);
-            g_ptRB.y = HIWORD(lParam);
-            InvalidateRect(hWnd, nullptr, true);
         }
         break;
     case WM_LBUTTONUP:
-    {
-        tObjInfo info = {};
-        info.g_ptObjPos.x = (g_ptLT.x + g_ptRB.x) / 2;
-        info.g_ptObjPos.y = (g_ptLT.y + g_ptRB.y) / 2;
-
-        info.g_ptObjScale.x = abs(g_ptLT.x - g_ptRB.x);
-        info.g_ptObjScale.y = abs(g_ptLT.y - g_ptRB.y);
-
-        g_vecInfo.push_back(info);
-
-        bLBtnDown = false;
-        InvalidateRect(hWnd, nullptr, true);
-    }
-    break;
-
-    case WM_TIMER:
         {
-        int a = 0;
         }
         break;
 

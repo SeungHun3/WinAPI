@@ -23,6 +23,9 @@
     <Filter Include="Engine\03.Manager\KeyMgr">
       <UniqueIdentifier>{5b7bfecc-317c-41cb-bd54-7aa635cb84c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object">
+      <UniqueIdentifier>{f3636d60-7608-481f-aba9-97520f98ab48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -47,6 +50,9 @@
       <Filter>Engine\03.Manager\KeyMgr</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="CObject.h">
+      <Filter>Engine\04.Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vs19_WinAPI.rc">
@@ -69,5 +75,8 @@
       <Filter>Engine\03.Manager\KeyMgr</Filter>
     </ClCompile>
     <ClCompile Include="vs19_WinAPI.cpp" />
+    <ClCompile Include="CObject.cpp">
+      <Filter>Engine\04.Object</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
