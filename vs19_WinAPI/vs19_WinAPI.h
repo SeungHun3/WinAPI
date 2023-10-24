@@ -5,6 +5,7 @@
 // class CCore;
 // extern CCore core; // 이럴 경우 객체생성 방지가 되지 않는다
 
+/*
 class CCore
 {
 
@@ -57,3 +58,5 @@ private:
 int CCore::m_istatic = 1; // 클래스의 정적멤버 직접 변경 // 정적 멤버는 반드시 자료형 넣고 직접 초기화를 해줘야함(기본 문법)
 
 CCore* CCore::g_pInst = nullptr; // static 초기화
+
+*/
