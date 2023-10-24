@@ -10,6 +10,9 @@ private:
 	POINT m_ptResolution; // 메인 윈도우 해상도
 	HDC m_hDC; // 메인 윈도우에 Draw할 DC
 
+	//비트맵: 윈도우에서 모든 픽셀을 저장하고 있는 데이터
+	HBITMAP m_hBit; // 사본용 비트맵
+	HDC m_memDC; // 사본용 DC
 
 public:
 	int init(HWND _hwnd, POINT _ptResolution);

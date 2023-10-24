@@ -11,5 +11,5 @@
 							type();\
 							~type();
 
-#define fDT CTimemgr::GetInst()->GetfDT();
-#define DT CTimemgr::GetInst()->GetDT();
+#define fDT CTimeMgr::GetInst()->GetfDT();
+#define DT CTimeMgr::GetInst()->GetDT();
