@@ -6,6 +6,22 @@ struct Vec2
 	float x;
 	float y;
 
+public:
+	float Length()
+	{
+		return sqrt(x * x + y * y);// (x^2 + y^2)의 루트함수
+	}
+	Vec2& Normalize()
+	{
+		float fLen = Length();
+
+		assert(fLen != 0.f); // 길이가 0인경우 에러
+		x /= fLen;
+		y /= fLen;
+
+		return *this;
+	}
+
 
 public:
 	//Vec2& operator = (POINT _pt)

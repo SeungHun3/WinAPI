@@ -6,11 +6,17 @@ class CMissile :
     public CObject
 {
 private:
-    float m_fTheta; // 각도
+    //float m_fTheta; // 각도
+
+    Vec2 m_vDir; // 월드좌표가 아닌 원점을 중심으로 한 방향정보
 
 public:
-    void SetDir(float _fTheta) { m_fTheta = _fTheta; }
-
+    //void SetDir(float _fTheta) { m_fTheta = _fTheta; }
+    void SetDir(Vec2 _vDir) 
+    {
+        m_vDir = _vDir;
+        m_vDir.Normalize();
+    }
 
 public:
     virtual void update();
