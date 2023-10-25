@@ -4,7 +4,7 @@
 #include "CTimeMgr.h"
 
 CMissile::CMissile()
-	: m_fTheta(2.f* PI / 2.f) // 180µµ
+	: m_fTheta(0.f) // 0µµ
 {
 }
 
