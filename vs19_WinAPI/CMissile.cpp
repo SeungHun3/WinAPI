@@ -4,7 +4,7 @@
 #include "CTimeMgr.h"
 
 CMissile::CMissile()
-	: m_fDir(1.f)
+	: m_fTheta(PI / 4.f)
 {
 }
 
@@ -15,8 +15,9 @@ CMissile::~CMissile()
 void CMissile::update()
 {
 	Vec2 vPos = GetPos();
-
-	vPos.y += 600.f * (float)m_fDir * fDT;
+	// 대각선 이동시 1 맞춰주기 => 1라디안
+	vPos.x += 600.f * cosf(m_fTheta) * fDT;
+	vPos.y += 600.f * sinf(m_fTheta) * fDT;
 
 	SetPos(vPos);
 
