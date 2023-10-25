@@ -19,18 +19,7 @@ CScene_Start::~CScene_Start()
 
 void CScene_Start::Enter()
 {
-	// Texture 로딩하기
-	CTexture* pTex = new CTexture;
-	wstring strFilepath = CPathMgr::GetInst()->GetContentPath();
-
-	//상대경로
-	strFilepath += L"texture\\Player.bmp";
-	pTex->Load(strFilepath);
-
-
-	delete pTex;
-
-
+	
 	//오브젝트 추가
 	//pObj = new CObject; // 추상클래스로 변경되어 동적 할당 불가
 	

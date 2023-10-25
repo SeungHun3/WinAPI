@@ -10,10 +10,15 @@ class CTexture :
 private:
     HDC m_dc;
     HBITMAP m_hBit;
-
+    BITMAP m_bitInfo;
 
 public:
     void Load(const wstring& _strFilePath); // 빌드경로변경: 프로젝트 속성 => 출력디렉토리 변경  $(SolutionDir)Output\bin_debug
+
+    UINT Width() { return m_bitInfo.bmWidth; }
+    UINT Height() { return m_bitInfo.bmHeight; }
+
+    HDC GetDC() { return m_dc; }
 
 public:
     CTexture();
