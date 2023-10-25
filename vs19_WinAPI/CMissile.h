@@ -6,16 +6,10 @@ class CMissile :
     public CObject
 {
 private:
-    float m_fDir; // 위 아래 방향
+    float m_fTheta; // 각도
 
 public:
-    void SetDir(bool _Up)
-    {
-        if (_Up)
-            m_fDir = -1.f;
-        else
-            m_fDir = 1.f;
-    }
+    void SetDir(float _fTheta) { m_fTheta = _fTheta; }
 
 
 public:
