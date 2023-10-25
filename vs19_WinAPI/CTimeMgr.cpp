@@ -3,6 +3,8 @@
 
 #include "CCore.h"
 
+//시간 동기화 이유 : 프로그램자체적인 프레임에 따라 게임 자체적인 속도가 달라진다 (update호출되는 절대양이 달라짐)
+
 CTimeMgr::CTimeMgr()
 	: m_llCurCount{}
 	, m_llPrevCount{}

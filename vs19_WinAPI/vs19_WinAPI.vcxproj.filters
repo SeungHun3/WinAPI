@@ -41,6 +41,12 @@
     <Filter Include="Engine\05.Scene\Scene_Start">
       <UniqueIdentifier>{f91b8b5b-68ab-41ae-9166-b79d68b55c6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Player">
+      <UniqueIdentifier>{942cae61-fbfc-4efa-bf5d-e77e8a1cab6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Monster">
+      <UniqueIdentifier>{7ab06f28-4689-4ee2-bef6-4ac1fd2eca87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -83,6 +89,12 @@
     <ClInclude Include="CScene_Start.h">
       <Filter>Engine\05.Scene\Scene_Start</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Engine\04.Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Engine\04.Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vs19_WinAPI.rc">
@@ -119,6 +131,12 @@
     </ClCompile>
     <ClCompile Include="CScene_Start.cpp">
       <Filter>Engine\05.Scene\Scene_Start</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Engine\04.Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Engine\04.Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
