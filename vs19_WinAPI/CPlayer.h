@@ -6,6 +6,9 @@ class CPlayer :
 public:
     virtual void update();
 
+private:
+    void CreateMissile();
+
 
 };
 

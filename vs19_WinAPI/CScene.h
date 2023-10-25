@@ -21,7 +21,7 @@ public:
 	virtual void Enter() = 0; // 진입시 호출
 	virtual void Exit() = 0;  // 탈출시 호출
 
-protected:
+public:
 	void AddObject(CObject* _pObj, GROUP_TYPE _eType) // 인라인 함수 작성시 다른곳에서 호출해도 해당 스택에서 호출되어 호출비용없음
 	{
 		m_arrObj[(UINT)_eType].push_back(_pObj);

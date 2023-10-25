@@ -47,6 +47,9 @@
     <Filter Include="Engine\04.Object\Monster">
       <UniqueIdentifier>{7ab06f28-4689-4ee2-bef6-4ac1fd2eca87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Missile">
+      <UniqueIdentifier>{42716417-a955-493b-b1c9-e3d6e29e604f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -95,6 +98,9 @@
     <ClInclude Include="CMonster.h">
       <Filter>Engine\04.Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>Engine\04.Object\Missile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vs19_WinAPI.rc">
@@ -137,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="CMonster.cpp">
       <Filter>Engine\04.Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Engine\04.Object\Missile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
