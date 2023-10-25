@@ -7,8 +7,6 @@
 #include "CObject.h"
 
 
-CObject g_obj;
-
 
 CCore::CCore()
 	: m_hwnd(0)
@@ -61,11 +59,6 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 	CKeyMgr::GetInst()->init();
 	CSceneMgr::GetInst()->init();
 
-	// 오브젝트 초기화 : 해상도 / 2 =>화면중앙
-	g_obj.SetPos(Vec2((float)(m_ptResolution.x / 2), (float)(m_ptResolution.y / 2) ));
-	g_obj.SetScale(Vec2(100, 100));
-
-
 	return S_OK;
 }
 
@@ -73,71 +66,20 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 
 void CCore::progress()
 {
-	//static int callcount = 0;
-	//++callcount;
-	//static int iPrevCount = GetTickCount();
-	//
-	//int iCurCount = GetTickCount();
-	//
-	//if (iCurCount - iPrevCount > 1000) // 1초 차이가 났을때 
-	//{
-	//	iPrevCount = iCurCount; // 중단점걸어 호출카운팅했을때 callcount = 13만번 => 1초에 13만번 호출
-	//	callcount = 0;
-	//}
-
-
+	
 	// Manager Update
 	CTimeMgr::GetInst()->update();
 	CKeyMgr::GetInst()->update();
-	
-	Update();
-	
-	Render();
 
+
+	CSceneMgr::GetInst()->update();
+	//=========		//Update(); -> 씬 업데이트
+	//Rendering		//
+	//=========		//Render(); -> 씬 렌더
+	//화면 Clear
+	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
+
+	CSceneMgr::GetInst()->render(m_memDC);
+
+	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
 }
-
-//물체들의 변경점(좌표 등..) 체크할 함수
-void CCore::Update()
-{
-	//비동기: 포커싱 되어있지 않아도 함수 호출됨
-	//동기화에 대한 문제 생각하며 설계필요
-	
-	//GetAsyncKeyState(VK_LEFT); // 키가 눌렸는지 => 키의 상태값 비트 조합 후 반환
-	Vec2 vPos = g_obj.GetPos();
-
-	if (CKeyMgr::GetInst()->GetKeyState(KEY::LEFT) == KEY_STATE::HOLD)
-	{
-		vPos.x -= 200.f* CTimeMgr::GetInst()->GetfDT();
-	}
-	if (CKeyMgr::GetInst()->GetKeyState(KEY::RIGHT) == KEY_STATE::HOLD)
-	{
-		vPos.x += 200.f * CTimeMgr::GetInst()->GetfDT();
-	}
-	g_obj.SetPos(vPos);
-}
-
-void CCore::Render()
-{
-	// 화면 Clear: 해상도+1만큼 사각형그려줌 => 매순간 모든 픽셀을 작업해야함, 모든 처리과정을 모니터에 나타냄
-	// => 사본에 모두 그리고 한번에 원본에 렌더하는 방법으로 진행
-	// ** 이중버퍼링 **
-	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1); // 사본에 그리기: 화면 Clear
-
-
-	// 그리기
-	// 오브젝트 하나하나마다 그리고 있는 과정을 보여주는게 아닌 모두 다 그렸을때 보여주는화면으로 바꿔줘야함
-	Vec2 vPos = g_obj.GetPos();
-	Vec2 vScale = g_obj.GetScale();
-	// DC가 사용하고 있는 비트맵이 윈도우에 Rectangle표현됨
-	// 사본에 그리기: Rectangle
-	Rectangle(m_memDC, int(vPos.x - vScale.x /2.f)
-				   , int(vPos.y - vScale.y / 2.f)
-				   , int(vPos.x + vScale.x / 2.f)
-				   , int(vPos.y + vScale.y / 2.f));
-
-	// 사본데이터를 원본으로 모든 픽셀 복사하여 옮겨서 렌더: BitBlt함수사용
-	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);// 복사 받을 DC, 렌더 해상도, 복사할 DC, 복사할 데이터
-
-
-}
-

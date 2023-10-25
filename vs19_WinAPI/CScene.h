@@ -13,6 +13,18 @@ public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
 
+	void update();
+	void render(HDC _dc);
+
+	// 순수 가상함수로 구현
+	virtual void Enter() = 0; // 진입시 호출
+	virtual void Exit() = 0;  // 탈출시 호출
+
+protected:
+	void AddObject(CObject* _pObj, GROUP_TYPE _eType) // 인라인 함수 작성시 다른곳에서 호출해도 해당 스택에서 호출되어 호출비용없음
+	{
+		m_arrObj[(UINT)_eType].push_back(_pObj);
+	}
 
 public:
 	CScene();
