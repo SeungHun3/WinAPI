@@ -36,12 +36,15 @@ void CTimeMgr::update()
 	
 	// 이전 카운트값을 현재값으로 갱신
 	m_llPrevCount = m_llCurCount;
+}
+
+void CTimeMgr::render()
+{
 	//m_dDt의 역수 = FPS(초당 카운트 횟수)
 	//단점 : 불안정함 => 직접 카운트 증가시켜 계산
-
 	m_iCallCout++;
 	m_dAcc += m_dDt; // DT누적: 흐른 시간
-	if (m_dAcc>=1.)
+	if (m_dAcc >= 1.)
 	{
 		m_iFPS = m_iCallCout;
 		m_dAcc = 0.;
@@ -49,11 +52,9 @@ void CTimeMgr::update()
 
 		// 숫자 변환
 		wchar_t szBuffer[255];
-		swprintf_s(szBuffer,L"FPS : %d, DT : %f", m_iFPS, m_dDt);
+		swprintf_s(szBuffer, L"FPS : %d, DT : %f", m_iFPS, m_dDt);
 		// 정보 타이틀창으로 출력
-		SetWindowText(CCore::GetInst()->GetMainHwnd(),szBuffer);
+		SetWindowText(CCore::GetInst()->GetMainHwnd(), szBuffer);
 	}
 
-
-	
 }
