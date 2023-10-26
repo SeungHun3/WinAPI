@@ -62,6 +62,9 @@
     <Filter Include="Engine\03.Manager\PathMgr">
       <UniqueIdentifier>{4d0b4c2b-8c09-46d0-982a-f71cceea6043}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03.Manager\ResMgr">
+      <UniqueIdentifier>{99829737-410e-4903-a883-9cdd3088213c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -125,6 +128,9 @@
     <ClInclude Include="CPathMgr.h">
       <Filter>Engine\03.Manager\PathMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CResMgr.h">
+      <Filter>Engine\03.Manager\ResMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vs19_WinAPI.rc">
@@ -182,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="CPathMgr.cpp">
       <Filter>Engine\03.Manager\PathMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CResMgr.cpp">
+      <Filter>Engine\03.Manager\ResMgr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

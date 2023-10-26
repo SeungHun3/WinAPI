@@ -6,6 +6,8 @@
 
 #include "CCore.h" // 프로그램의 핵심역할로 설계 중..
 
+#include <crtdbg.h>
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -31,6 +33,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,        // _In_ : 입력된다라
                      _In_ LPWSTR    lpCmdLine, // 프로그램이 실행될때 cmd 입력값을 받아옴
                      _In_ int       nCmdShow)
 {
+
+    //메모리 릭(누수) 체크
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    // _CrtSetBreakAlloc(53465461456416) //문제가 생겼을때 해당지점에 중단점 걸어주는 함수
+
+
+
+
+
+
     UNREFERENCED_PARAMETER(hPrevInstance);  // 아무의미없이 일단 적어줌 사실상 없어도 됨 
     UNREFERENCED_PARAMETER(lpCmdLine);      // 매크로 사용법 알려주려 하는듯
 
