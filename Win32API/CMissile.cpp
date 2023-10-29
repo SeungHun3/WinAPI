@@ -9,6 +9,7 @@ CMissile::CMissile()
 {
 	m_vDir.Normalize(); // 벡터의 길이를 1로 변환
 
+	CreateCollider();
 }
 
 CMissile::~CMissile()

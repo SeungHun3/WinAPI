@@ -14,17 +14,23 @@ private:
 	HBITMAP m_hBit; // 사본용 비트맵
 	HDC m_memDC; // 사본용 DC
 
+	// 자주 사용하는 GDI Object Grapic Device Interface Object
+	HBRUSH m_arrBrush[(UINT)BRUSH_TYPE::END];
+	HPEN m_arrPen[(UINT)PEN_TYPE::END];
+
+
 public:
 	int init(HWND _hwnd, POINT _ptResolution);
 	void progress();
 
 private:
-	void Update();
-	void Render();
+	void CreateBrushPen();
 
 public:
 	HWND GetMainHwnd() { return m_hwnd; }
 	POINT GetResolution() { return m_ptResolution; }
 	HDC GetMainDC() { return m_hDC; }
+	HBRUSH GetBrush(BRUSH_TYPE _eType) { return m_arrBrush[(UINT)_eType]; }
+	HPEN GetPen(PEN_TYPE _eType) { return m_arrPen[(UINT)_eType]; }
 };
 

@@ -14,6 +14,7 @@ public:
 	const wstring& GetName() { return m_strName; }
 
 	void update();
+	void finalupdate();
 	void render(HDC _dc);
 
 	// 순수 가상함수로 구현 = 클래스는 추상클래스로 변경 

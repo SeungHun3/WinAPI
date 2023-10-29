@@ -19,7 +19,7 @@ void CPathMgr::init()
 
 
 
-	int iLen = wcslen(m_szContentPath);
+	int iLen = (int)wcslen(m_szContentPath);
 	//상위폴더로 	//문자열 변환 '\\' => '\0'
 	for (int i = iLen - 1; i >= 0; --i) // 문자열 뒤에서부터 탐색
 	{

@@ -13,6 +13,8 @@ CCore::CCore()
 	, m_hDC(0)
 	, m_hBit(0)
 	, m_memDC(0)
+	, m_arrBrush{}
+	, m_arrPen{}
 {
 }
 
@@ -21,6 +23,12 @@ CCore::~CCore()
 	ReleaseDC(m_hwnd, m_hDC); // 싱글톤 객체로 데이터 영역의 메모리를 사용, 소멸자 호출되는시점 : 프로그램 종료
 	DeleteDC(m_memDC);
 	DeleteObject(m_hBit); // delete를 구분지어있는 이유는 정확히는 모름(메모리관련 예상) : 공식 문서에서 요구하는데로 틀 맞춤 
+
+	//생성한 Pen 지우기
+	for (int i = 0; i < (UINT)PEN_TYPE::END; ++i)
+	{
+		DeleteObject(m_arrPen[i]);
+	}
 }
 
 int CCore::init(HWND _hwnd, POINT _ptResolution)
@@ -53,6 +61,9 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 	DeleteObject(hOldBit);
 	// 지움(m_memDC 생성시 디폴트로된 의미없는 비트맵)
 
+	//자주 사용하는 펜 및 브러쉬 생성
+	CreateBrushPen();
+
 	// Manager 초기화
 	CPathMgr::GetInst()->init();
 	CTimeMgr::GetInst()->init();
@@ -84,4 +95,14 @@ void CCore::progress()
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
 
 	//CTimeMgr::GetInst()->render();
+}
+
+void CCore::CreateBrushPen()
+{
+	m_arrBrush[(UINT)BRUSH_TYPE::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH); //HOLLOW BRUSH의 경우윈도우에서 기본적으로 제공하기때문에 get으로 바로 받아옴
+
+	//red blue green pen
+	m_arrPen[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));	
+	m_arrPen[(UINT)PEN_TYPE::BLUE] = CreatePen(PS_SOLID, 1, RGB(0,0, 255));
+	m_arrPen[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, 1, RGB(0,255,0));
 }

@@ -17,6 +17,8 @@ CPlayer::CPlayer()
 {
 	// Texture 로딩하기
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player.bmp");
+
+	CreateCollider();
 }
 
 CPlayer::~CPlayer()
@@ -84,6 +86,9 @@ void CPlayer::render(HDC _dc)
 		, 0, 0, 64, 64//iWidth, iHeight	
 		, RGB(255, 0, 255));
 	// 선언 부분은 window.h에 되어있으나 구현파트가 Library에 들어있음 #pragma comment (lib, "Msimg32.lib")
+
+	// 컴포넌트가 있는경우 렌더
+	component_render(_dc);
 
 }
 
