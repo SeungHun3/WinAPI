@@ -13,9 +13,9 @@ public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
 
-	void update();
-	void finalupdate();
-	void render(HDC _dc);
+	virtual void update();
+	virtual void finalupdate();
+	virtual void render(HDC _dc);
 
 	// 순수 가상함수로 구현 = 클래스는 추상클래스로 변경 
 	// => 추상클래스는  직접적으로 new 생성 불가, 자식클래스도 virtual로 함수를 오버라이드하지 않으면 추상클래스가 되어버림
@@ -29,6 +29,9 @@ public:
 	}
 
 	const vector<CObject*>& GetGroupObject(GROUP_TYPE _eType) { return m_arrObj[(UINT)_eType]; } // 그룹 자체를 리턴
+	void DeleteGroup(GROUP_TYPE _eTarget);
+	void DeleteAll();
+
 
 public:
 	CScene();

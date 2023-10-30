@@ -11,12 +11,26 @@
 #include "CTexture.h"
 
 #include "CCollisionMgr.h"
+#include "CKeyMgr.h"
+#include "CSceneMgr.h"
+
+
 CScene_Start::CScene_Start()
 {
 }
 
 CScene_Start::~CScene_Start()
 {
+}
+
+void CScene_Start::update()
+{
+	CScene::update(); // 부모함수 호출
+	if (KEY_TAP(KEY::ENTER))
+	{
+		ChangeScene(SCENE_TYPE::TOOL);
+	}
+
 }
 
 void CScene_Start::Enter()
@@ -65,8 +79,12 @@ void CScene_Start::Enter()
 
 }
 
+
+
 void CScene_Start::Exit()
 {
+	DeleteAll();
+
 	//그룹끼리 묶은 충돌해제
 	CCollisionMgr::GetInst()->Reset();
 }

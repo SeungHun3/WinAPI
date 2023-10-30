@@ -24,3 +24,13 @@ void DeleteObject(CObject* _pObj)
 	CEventMgr::GetInst()->AddEvent(even);
 
 }
+
+void ChangeScene(SCENE_TYPE _eNext)
+{
+	tEvent even = {};
+
+	even.eEvent = EVENT_TYPE::SCENE_CHANGE;
+	even.lParam = (DWORD_PTR)_eNext;
+
+	CEventMgr::GetInst()->AddEvent(even);
+}

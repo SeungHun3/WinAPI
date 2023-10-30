@@ -72,6 +72,9 @@
     <Filter Include="Engine\03.Manager\EventMgr">
       <UniqueIdentifier>{0f3ad62d-3fda-4b54-824d-44b643911d35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05.Scene\Scene_Tool">
+      <UniqueIdentifier>{f823d7b9-267e-446e-899f-0c4a36a6f960}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CObject.h">
@@ -155,6 +158,9 @@
     <ClInclude Include="func.h">
       <Filter>Engine\01.Header</Filter>
     </ClInclude>
+    <ClInclude Include="CScene_Tool.h">
+      <Filter>Engine\05.Scene\Scene_Tool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32API.cpp">
@@ -219,6 +225,9 @@
     </ClCompile>
     <ClCompile Include="func.cpp">
       <Filter>Engine\01.Header</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Tool.cpp">
+      <Filter>Engine\05.Scene\Scene_Tool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

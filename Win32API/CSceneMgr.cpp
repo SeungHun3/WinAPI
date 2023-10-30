@@ -2,6 +2,8 @@
 #include "CSceneMgr.h"
 
 #include "CScene_Start.h"
+#include "CScene_Tool.h"
+#include "CEventMgr.h"
 
 CSceneMgr::CSceneMgr()
 	: m_pCurScene(nullptr)
@@ -29,7 +31,8 @@ void CSceneMgr::init()
 	m_arrScene[(UINT)SCENE_TYPE::START] = new CScene_Start;
 	m_arrScene[(UINT)SCENE_TYPE::START]->SetName(L"Start Scene");
 
-	m_arrScene[(UINT)SCENE_TYPE::TOOL] = nullptr;// = new CScene_Tool;
+	m_arrScene[(UINT)SCENE_TYPE::TOOL] = new CScene_Tool;
+	m_arrScene[(UINT)SCENE_TYPE::TOOL]->SetName(L"Tool Scene");
 	m_arrScene[(UINT)SCENE_TYPE::STAGE_01] = nullptr;// = new CScene_STAGE_01;
 	m_arrScene[(UINT)SCENE_TYPE::STAGE_02] = nullptr;// = new CScene_STAGE_02;
 
@@ -52,4 +55,13 @@ void CSceneMgr::render(HDC _dc)
 {
 	m_pCurScene->render(_dc);
 
+}
+
+void CSceneMgr::ChangeScene(SCENE_TYPE _eNext)
+{
+	m_pCurScene->Exit();
+
+	m_pCurScene = m_arrScene[(UINT)_eNext];
+
+	m_pCurScene->Enter();
 }
