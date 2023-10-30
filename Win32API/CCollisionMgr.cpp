@@ -80,14 +80,28 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 			{
 				if (iter->second) // 이전에도 충돌하고 있는 경우 = 오버랩
 				{
-					pLeftCol->OnCollision(pRightCol);
-					pRightCol->OnCollision(pLeftCol);
+					if (vecLeft[i]->IsDead() || vecRight[j]->IsDead()) // 삭제예정인 오브젝트의 경우 이후 update함수 도달하지 않음 => 직접 충돌해제 이벤트 발생시킨다
+					{
+						pLeftCol->OnCollisionExit(pRightCol);
+						pRightCol->OnCollisionExit(pLeftCol);
+						iter->second = false;
+					}
+					else
+					{
+						pLeftCol->OnCollision(pRightCol);
+						pRightCol->OnCollision(pLeftCol);
+					}
 				}
 				else // 이전에는 충돌하지 않는 경우 = begin 오버랩 or hit
 				{
-					pLeftCol->OnCollisionEnter(pRightCol);
-					pRightCol->OnCollisionEnter(pLeftCol);
-					iter->second = true;
+					if (!vecLeft[i]->IsDead() && !vecRight[j]->IsDead()) // 삭제예정인 오브젝트는 충돌하지 않은 것으로 취급
+					{
+						pLeftCol->OnCollisionEnter(pRightCol);
+						pRightCol->OnCollisionEnter(pLeftCol);
+						iter->second = true;
+					}
+
+					
 				}
 			}
 

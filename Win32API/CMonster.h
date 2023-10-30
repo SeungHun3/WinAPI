@@ -9,6 +9,8 @@ private:
     Vec2 m_vCenterPos;
     float m_fMaxdistance;
     int m_iDir; // 진행방향 1 or -1
+
+    int m_iHP;
 public:
     float GetSpeed() { return m_fSpeed; }
     void SetSpeed(float _f) { m_fSpeed = _f; }
