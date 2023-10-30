@@ -16,8 +16,15 @@ public:
 private:
     void CreateMissile();
 
+    CPlayer* Clone() { return new CPlayer(*this); }
+
 public:
     CPlayer();
+    //CPlayer(const CPlayer& _origin)
+    //    : CObject(_origin)
+    //    , m_pTex(_origin.m_pTex)
+    //{}
+
     ~CPlayer();
 };
 

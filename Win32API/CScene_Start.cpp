@@ -45,6 +45,13 @@ void CScene_Start::Enter()
 	pObj->SetScale(Vec2(100.f, 100.f));
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
+	//복사 생성자를 이용한 개체복사
+	CObject* pOtherPlayer = pObj->Clone(); //new CPlayer(*(CPlayer*)pObj);
+	pOtherPlayer->SetPos(Vec2(440.f, 384.f));
+	AddObject(pOtherPlayer, GROUP_TYPE::PLAYER);
+
+
+
 	////Monster
 	//CMonster* pMonsterObj = new CMonster;
 	//pMonsterObj->SetPos(Vec2(640.f, 50.f));
