@@ -12,6 +12,8 @@
 #include "CResMgr.h"
 #include "CTexture.h"
 
+#include "CCollider.h"
+
 CPlayer::CPlayer()
 	: m_pTex(nullptr)
 {
@@ -19,6 +21,8 @@ CPlayer::CPlayer()
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player.bmp");
 
 	CreateCollider();
+	GetCollider()->SetOffsetPos(Vec2(0.f, 10.f));
+	GetCollider()->SetScale(Vec2(200.f, 200.f));
 }
 
 CPlayer::~CPlayer()

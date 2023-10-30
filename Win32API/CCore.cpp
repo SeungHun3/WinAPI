@@ -5,7 +5,7 @@
 #include "CKeyMgr.h"
 #include "CSceneMgr.h"
 #include "CPathMgr.h"
-
+#include "CCollisionMgr.h"
 
 CCore::CCore()
 	: m_hwnd(0)
@@ -84,6 +84,7 @@ void CCore::progress()
 
 
 	CSceneMgr::GetInst()->update();
+	CCollisionMgr::GetInst()->update();
 	//=========		//Update(); -> ¾À ¾÷µ¥ÀÌÆ®
 	//Rendering		//
 	//=========		//Render(); -> ¾À ·»´õ

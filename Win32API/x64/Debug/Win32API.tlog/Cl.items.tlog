@@ -1,4 +1,5 @@
 D:\vs19_Win32API\Win32API\CCollider.cpp;D:\vs19_Win32API\Win32API\x64\Debug\CCollider.obj
+D:\vs19_Win32API\Win32API\CCollisionMgr.cpp;D:\vs19_Win32API\Win32API\x64\Debug\CCollisionMgr.obj
 D:\vs19_Win32API\Win32API\CCore.cpp;D:\vs19_Win32API\Win32API\x64\Debug\CCore.obj
 D:\vs19_Win32API\Win32API\CKeyMgr.cpp;D:\vs19_Win32API\Win32API\x64\Debug\CKeyMgr.obj
 D:\vs19_Win32API\Win32API\CMissile.cpp;D:\vs19_Win32API\Win32API\x64\Debug\CMissile.obj
@@ -14,4 +15,5 @@ D:\vs19_Win32API\Win32API\CScene_Start.cpp;D:\vs19_Win32API\Win32API\x64\Debug\C
 D:\vs19_Win32API\Win32API\CSound.cpp;D:\vs19_Win32API\Win32API\x64\Debug\CSound.obj
 D:\vs19_Win32API\Win32API\CTexture.cpp;D:\vs19_Win32API\Win32API\x64\Debug\CTexture.obj
 D:\vs19_Win32API\Win32API\CTimeMgr.cpp;D:\vs19_Win32API\Win32API\x64\Debug\CTimeMgr.obj
+D:\vs19_Win32API\Win32API\SelectGDI.cpp;D:\vs19_Win32API\Win32API\x64\Debug\SelectGDI.obj
 D:\vs19_Win32API\Win32API\Win32API.cpp;D:\vs19_Win32API\Win32API\x64\Debug\Win32API.obj

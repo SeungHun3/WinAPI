@@ -3,6 +3,7 @@
 
 #include"CObject.h"
 
+
 CScene::CScene()
 {
 }

@@ -25,8 +25,8 @@
 
 enum class GROUP_TYPE
 {
-	DEFALUT,
-	PLAYER,
+	DEFALUT, // 0
+	PLAYER,	 // 1
 	MISSILE,
 	MONSTER,
 

@@ -1,6 +1,6 @@
-vs19_WinAPI/vs19_WinAPI/Debug/
-vs19_WinAPI/Debug/
-vs19_WinAPI/x64/
+Win32API/Win32API/Debug/
+Win32API/Debug/
+Win32API/x64/
 x64/
 
 *.vsidx

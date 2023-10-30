@@ -4,9 +4,21 @@
 #include "CObject.h"
 #include "CCore.h"
 
+#include "SelectGDI.h"
+
+UINT CCollider::g_iNextID = 0;
 
 CCollider::CCollider()
 	: m_pOwner(nullptr)
+	, m_iID(g_iNextID++)
+{
+}
+
+CCollider::CCollider(const CCollider& _origin)
+	: m_pOwner(nullptr)
+	, m_vOffsetPos(_origin.m_vOffsetPos)
+	, m_vScale(_origin.m_vScale)
+	, m_iID(g_iNextID++)
 {
 }
 
@@ -25,22 +37,25 @@ void CCollider::finalupdate()
 
 void CCollider::render(HDC _dc)
 {
-	//pen, brush를 받아서
-	HPEN hGreenPen = CCore::GetInst()->GetPen(PEN_TYPE::GREEN);
-	HBRUSH hHollowBrush = CCore::GetInst()->GetBrush(BRUSH_TYPE::HOLLOW);
-	//원래 쓰던 펜과 오브젝트를 돌려받는다
-	HPEN hDefaultPen = (HPEN)SelectObject(_dc, hGreenPen);
-	HBRUSH hDefaultBrush = (HBRUSH)SelectObject(_dc, hHollowBrush);
+	SelectGDI p(_dc, PEN_TYPE::GREEN); // 임시객체 생성할때 소멸하면 해당 함수종료시 소멸자 호출됨(소멸자에 오브젝트 반환함수처리)
+	SelectGDI b(_dc, BRUSH_TYPE::HOLLOW);
 
 	Rectangle(_dc
-		, m_vFinalPos.x - m_vScale.x / 2.f
-		, m_vFinalPos.y - m_vScale.y / 2.f
-		, m_vFinalPos.x + m_vScale.x / 2.f
-		, m_vFinalPos.y + m_vScale.y / 2.f);
+		, (int)(m_vFinalPos.x - m_vScale.x / 2.f)
+		, (int)(m_vFinalPos.y - m_vScale.y / 2.f)
+		, (int)(m_vFinalPos.x + m_vScale.x / 2.f)
+		, (int)(m_vFinalPos.y + m_vScale.y / 2.f));
 
 
-	SelectObject(_dc, hGreenPen);
-	SelectObject(_dc, hHollowBrush);
+}
 
+
+
+void CCollider::OnCollision(CCollider* _pOther)
+{
+}
+
+void CCollider::OnCollisionEnter(CCollider* _pOther)
+{
 }
 
