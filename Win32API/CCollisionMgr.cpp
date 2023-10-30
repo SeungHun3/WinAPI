@@ -53,7 +53,7 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 
 
 		// 충돌체가 없거나 자기자신과의 충돌일 경우
-		for (size_t j = 0; j > vecRight.size(); ++j)
+		for (size_t j = 0; j < vecRight.size(); ++j)
 		{
 			if (nullptr == vecRight[j]->GetCollider() || vecLeft[i] == vecRight[j]) 
 			{
@@ -108,10 +108,20 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 	}
 }
 
-bool CCollisionMgr::IsCollision(CCollider* _eLeftCol, CCollider* _RightCol)
+bool CCollisionMgr::IsCollision(CCollider* _pLeftCol, CCollider* _pRightCol)
 {
-	
-	
+	Vec2 vLeftPos = _pLeftCol->GetFinalPos();
+	Vec2 vLeftScale = _pLeftCol->GetScale();
+
+	Vec2 vRightPos = _pRightCol->GetFinalPos();
+	Vec2 vRightScale = _pRightCol->GetScale();
+
+	if (abs(vRightPos.x - vLeftPos.x) < (vLeftScale.x + vRightScale.x) / 2.f
+		&& abs(vRightPos.y - vLeftPos.y) < (vLeftScale.y + vRightScale.y) / 2.f)
+	{
+		return true;
+	}
+
 	return false;
 }
 

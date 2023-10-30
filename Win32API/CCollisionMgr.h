@@ -16,7 +16,7 @@ union COLLIDR_ID
 class CCollisionMgr
 {
 
-	SINGLE(CCollisionMgr);
+	SINGLE(CCollisionMgr)
 
 private:
 	// 충돌체 간의 이전 프레임 충돌정보
@@ -36,7 +36,7 @@ public:
 private:
 
 	void CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight); // 그룹간 충돌갱신
-	bool IsCollision(CCollider* _eLeftCol, CCollider* _RightCol);
+	bool IsCollision(CCollider* _pLeftCol, CCollider* _pRightCol);
 
 };
 

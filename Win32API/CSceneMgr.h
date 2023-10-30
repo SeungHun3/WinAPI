@@ -3,7 +3,7 @@ class CScene;
 
 class CSceneMgr
 {
-	SINGLE(CSceneMgr);
+	SINGLE(CSceneMgr)
 
 private:
 	CScene* m_arrScene[(UINT)SCENE_TYPE::END]; // ¸ðµç ¾À¸ñ·Ï

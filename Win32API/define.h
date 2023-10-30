@@ -27,8 +27,10 @@ enum class GROUP_TYPE
 {
 	DEFALUT, // 0
 	PLAYER,	 // 1
-	MISSILE,
 	MONSTER,
+
+	PROJ_PLAYER, // 플레이어 미사일
+	PROJ_MONSTER, // 몬스터 미사일
 
 	END = 32,
 };
@@ -53,5 +55,15 @@ enum class PEN_TYPE
 	RED,
 	GREEN,
 	BLUE,
+
 	END
+};
+
+enum class EVENT_TYPE
+{
+	CREATE_OBJECT,
+	DELETE_OBJECT,
+	SCENE_CHANGE,
+
+	END,
 };

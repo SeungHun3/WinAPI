@@ -42,7 +42,7 @@ void CScene_Start::Enter()
 	Vec2 vResolution = CCore::GetInst()->GetResolution();
 	CMonster* pMonsterObj = nullptr;
 
-	int iMonCount = 10;
+	int iMonCount = 3;
 	float fMoveDist = 25.f;
 	float fObjScale = 50.f;
 	float fTerm = (vResolution.x - ((fMoveDist + fObjScale / 2.f) * 2)) / (float)(iMonCount - 1);
@@ -50,6 +50,7 @@ void CScene_Start::Enter()
 	for (int i = 0; i < iMonCount; i++)
 	{
 		CMonster* pMonsterObj = new CMonster;
+		pMonsterObj->SetName(L"Monster");
 		pMonsterObj->SetPos(Vec2((fMoveDist + fObjScale / 2.f) + (float)i * fTerm, 50.f));
 		pMonsterObj->SetCenterPos(pMonsterObj->GetPos());
 		pMonsterObj->SetMoveDistance(fMoveDist);
@@ -60,6 +61,7 @@ void CScene_Start::Enter()
 	// 충돌지정
 	// Player 그룹과 Monster 그룹간의 충돌체크
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
+	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
 
 }
 

@@ -5,7 +5,7 @@
 class CPathMgr
 {
 
-	SINGLE(CPathMgr);
+	SINGLE(CPathMgr)
 
 private:
 	wchar_t m_szContentPath[255]; // 윈도우에서 경로가 255로 제한되어있음

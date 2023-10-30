@@ -2,6 +2,7 @@
 #include "CMissile.h"
 
 #include "CTimeMgr.h"
+#include "CCollider.h"
 
 CMissile::CMissile()
 //: m_fTheta(PI) // m_fTheta : 0 ~ 1 = 0도 ~ 180도
@@ -10,6 +11,7 @@ CMissile::CMissile()
 	m_vDir.Normalize(); // 벡터의 길이를 1로 변환
 
 	CreateCollider();
+	GetCollider()->SetScale(Vec2(15.f, 15.f));
 }
 
 CMissile::~CMissile()
@@ -40,5 +42,15 @@ void CMissile::render(HDC _dc)
 	Ellipse(_dc, (int)(vPos.x - vScale.x / 2.f), (int)(vPos.y - vScale.y / 2.f)
 		, (int)(vPos.x + vScale.x / 2.f), (int)(vPos.y + vScale.y / 2.f));
 
+	component_render(_dc);
+}
 
+void CMissile::OnCollisionEnter(CCollider* _pOther)
+{
+	CObject* pOtherObj = _pOther->GetObj();
+
+	if (pOtherObj->GetName() == L"Monster")
+	{
+		DeleteObject(this);
+	}
 }
