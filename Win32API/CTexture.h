@@ -22,7 +22,7 @@ public:
 
 private:
     CTexture();
-    ~CTexture();;
+    virtual ~CTexture();
 
     friend class CResMgr; // 리소스매니저에서만 생성할 수 있게
 };

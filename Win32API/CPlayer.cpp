@@ -13,16 +13,30 @@
 #include "CTexture.h"
 
 #include "CCollider.h"
+#include "CAnimator.h"
+#include "CAnimation.h"
+
 
 CPlayer::CPlayer()
-	: m_pTex(nullptr)
 {
 	// Texture 로딩하기
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player.bmp");
+	//m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player.bmp");
 
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 10.f));
 	GetCollider()->SetScale(Vec2(200.f, 200.f));
+
+
+	CTexture* pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\link_0.bmp");
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"WALK_DOWN", pTex, Vec2(0.f, 260.f), Vec2(60.f, 65.f), Vec2(60.f, 0.f), 0.1f, 10);
+	GetAnimator()->Play(L"WALK_DOWN",true);
+
+	// 애니매이션 오프셋
+	CAnimation* pAnim = GetAnimator()->FindAnimation(L"WALK_DOWN");
+	for(int i = 0; i< pAnim->GetMaxFrame(); ++i)
+	pAnim->GetFrame(i).vOffset = Vec2(0.f, -20.f);
+
 }
 
 CPlayer::~CPlayer()
@@ -59,37 +73,12 @@ void CPlayer::update()
 	}
 
 	SetPos(vPos);
+
+	GetAnimator()->update();
 }
 
 void CPlayer::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->Width(); // width는 unsigned int로 반환되지만 BitBlt에 들어갈 정보는 음수가 들어갈 수도 있음(화면밖으로 나갈때) => int 캐스팅
-	int iHeight = (int)m_pTex->Height();
-	Vec2 vPos = GetPos();
-
-
-
-	////BitBlt 모든 픽셀을 복사
-	//BitBlt(_dc
-	//	, int(vPos.x - (float)(iWidth / 2)) // x 시작점
-	//	, int(vPos.y - (float)(iHeight / 2))// y 시작점
-	//	, iWidth, iHeight
-	//	, m_pTex->GetDC()
-	//	, 0, 0, SRCCOPY);
-
-
-
-	// 조건에 따른 픽셀복사
-	TransparentBlt(_dc
-		//텍스쳐원본
-		, int(vPos.x - (float)(iWidth / 2)) // x 시작점
-		, int(vPos.y - (float)(iHeight / 2))// y 시작점
-		, iWidth, iHeight		// x,y 끝점
-		, m_pTex->GetDC()
-		//원본에서의 자를 픽셀범위
-		, 0, 0, 64, 64//iWidth, iHeight	
-		, RGB(255, 0, 255));
-	// 선언 부분은 window.h에 되어있으나 구현파트가 Library에 들어있음 #pragma comment (lib, "Msimg32.lib")
 
 	// 컴포넌트가 있는경우 렌더
 	component_render(_dc);
