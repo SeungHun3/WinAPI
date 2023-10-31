@@ -3,7 +3,7 @@
 
 #include "CObject.h"
 #include "CCore.h"
-
+#include "CCamera.h"
 #include "SelectGDI.h"
 
 UINT CCollider::g_iNextID = 0;
@@ -50,11 +50,13 @@ void CCollider::render(HDC _dc)
 	SelectGDI p(_dc, ePen); // 임시객체 생성할때 소멸하면 해당 함수종료시 소멸자 호출됨(소멸자에 오브젝트 반환함수처리)
 	SelectGDI b(_dc, BRUSH_TYPE::HOLLOW);
 
+	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vFinalPos);
+
 	Rectangle(_dc
-		, (int)(m_vFinalPos.x - m_vScale.x / 2.f)
-		, (int)(m_vFinalPos.y - m_vScale.y / 2.f)
-		, (int)(m_vFinalPos.x + m_vScale.x / 2.f)
-		, (int)(m_vFinalPos.y + m_vScale.y / 2.f));
+		, (int)(vRenderPos.x - m_vScale.x / 2.f)
+		, (int)(vRenderPos.y - m_vScale.y / 2.f)
+		, (int)(vRenderPos.x + m_vScale.x / 2.f)
+		, (int)(vRenderPos.y + m_vScale.y / 2.f));
 
 
 }

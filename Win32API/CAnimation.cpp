@@ -4,7 +4,7 @@
 #include "CAnimator.h"
 #include "CTexture.h"
 #include "CObject.h"
-
+#include "CCamera.h"
 
 CAnimation::CAnimation()
 	: m_pAnimator(nullptr)
@@ -51,6 +51,8 @@ void CAnimation::render(HDC _dc)
 	Vec2 vPos = pObj->GetPos();
 	vPos += m_vecFrm[m_iCurFrm].vOffset; // Object에 Offset 만큼 추가이동위치 (다리기준 중심좌표 = 애니매이션 위로 올리기)
 
+	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+
 	TransparentBlt(_dc
 		, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f	)
 		, (int)(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f)
@@ -68,7 +70,7 @@ void CAnimation::Create(CTexture* _pTex, Vec2 _vLT, Vec2 _vSliceSize, Vec2 _vSte
 {
 	m_pTex = _pTex;
 	tAnimFrm frm = {};
-	for (UINT i = 0; i < _iFrameCount; ++i)
+	for (int i = 0; i < (int)_iFrameCount; ++i)
 	{
 		frm.fDuration = _fDuration;
 		frm.vSlice = _vSliceSize;

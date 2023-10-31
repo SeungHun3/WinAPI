@@ -20,6 +20,11 @@ int g_arrVK[(int)KEY::LAST] =
 	VK_SPACE,	//SPACE,
 	VK_RETURN,	//ENTER,
 	VK_ESCAPE,	//ESC,
+
+
+
+	VK_LBUTTON,// LBTN,
+	VK_RBUTTON,// RBTN,
 	//
 	//
 	//LAST
@@ -84,6 +89,13 @@ void CKeyMgr::update()
 			}
 
 		}
+
+		//마우스 위치계산
+		POINT ptPos = {};
+		GetCursorPos(&ptPos); // 전체화면기준 마우스 좌표
+		ScreenToClient(CCore::GetInst()->GetMainHwnd(),&ptPos); // 현재 클라이언트 좌료값으로 전환
+		m_vCurMousePos = Vec2((float)ptPos.x, (float)ptPos.y);
+
 	}
 	else // 포커싱이 아니라면
 	{
