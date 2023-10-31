@@ -6,7 +6,10 @@
 #include "CTimeMgr.h"
 
 CCamera::CCamera()
-	:m_pTargetObj(nullptr)
+	: m_pTargetObj(nullptr)
+	, m_fTime(1.f)
+	, m_fSpeed(0.f)
+	, m_fAccTime(0.f)
 {
 
 }
@@ -48,10 +51,16 @@ void CCamera::CalDiff()
 {
 	// 이전 LookAt과 현재 Look의 차이값을 보정해서 현재의 LookAt을 구한다.
 
-	Vec2 vLookDir = m_vLookAt - m_vPevLookAt; // nomalize시 방향벡터가 나옴
-	m_vCurLookAt = m_vPevLookAt + vLookDir.Normalize() * 500.f * fDT;
-
-
+	m_fAccTime += fDT;
+	if (m_fTime <= m_fAccTime)
+	{
+		m_vCurLookAt = m_vLookAt;
+	}
+	else
+	{
+		Vec2 vLookDir = m_vLookAt - m_vPevLookAt; // nomalize시 방향벡터가 나옴
+		m_vCurLookAt = m_vPevLookAt + vLookDir.Normalize() * m_fSpeed * fDT;
+	}
 
 	Vec2 vResolution = CCore::GetInst()->GetResolution();
 	Vec2 vCenter = vResolution / 2;

@@ -39,7 +39,7 @@ public:
 	{
 		return m_vecFrm[_iIdx];
 	}
-	int GetMaxFrame() { return (int)m_vecFrm.size(); }
+	UINT GetMaxFrame() { return (UINT)m_vecFrm.size(); }
 
 private:
 
