@@ -8,6 +8,8 @@ public:
     virtual void MouseLbtnDown(); // 눌렀을때
     virtual void MouseLbtnUp(); // 누르고 뗏을때
 
+    CLONE(CBtnUI)
+
 
 public:
     CBtnUI();

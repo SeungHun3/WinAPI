@@ -43,6 +43,8 @@ public:
 
 	void CreateTile(UINT _iXCount, UINT _YCount);
 
+	vector<CObject*>& GetUIGroup() { return m_arrObj[(UINT)GROUP_TYPE::UI]; }
+
 public:
 	CScene();
 	virtual ~CScene();

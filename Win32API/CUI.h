@@ -44,10 +44,11 @@ public:
     virtual void MouseLbtnUp(); // 누르고 뗏을때
     virtual void MouseLbtnClicked(); // 클릭했을때
 
-    CLONE(CUI);
+    virtual CUI* Clone() = 0;
 
 public:
     CUI(bool _bCamAff);
+    CUI(const CUI& _origin);
     virtual ~CUI();
 
     friend class CUIMgr;
