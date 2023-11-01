@@ -8,7 +8,8 @@
 #include "CResMgr.h"
 #include "CSceneMgr.h"
 #include "resource.h"
-#include "CUI.h"
+#include "CPanelUI.h"
+#include "CBtnUI.h"
 
 
 CScene_Tool::CScene_Tool()
@@ -27,21 +28,21 @@ void CScene_Tool::Enter()
 	//UI 하나 만들기
 	Vec2 vResolution = CCore::GetInst()->GetResolution();
 
-	CUI* pUI = new CUI(false);
+	CUI* pPanelUI = new CPanelUI;
 
-	pUI->SetName(L"ParentUI");
-	pUI->SetScale(Vec2(500.f,300.f));
-	pUI->SetPos(Vec2(vResolution.x - pUI->GetScale().x,0.f));
+	pPanelUI->SetName(L"ParentUI");
+	pPanelUI->SetScale(Vec2(500.f,300.f));
+	pPanelUI->SetPos(Vec2(vResolution.x - pPanelUI->GetScale().x,0.f));
 
-	CUI* pChildUi = new CUI(false);
+	CUI* pBtnUI = new CBtnUI;
 
-	pChildUi->SetName(L"ChildUI");
-	pChildUi->SetScale(Vec2(100.f, 40.f));
-	pChildUi->SetPos(Vec2(0.f, 0.f));
+	pBtnUI->SetName(L"ChildUI");
+	pBtnUI->SetScale(Vec2(100.f, 40.f));
+	pBtnUI->SetPos(Vec2(0.f, 0.f));
 	
-	pUI->AddChild(pChildUi);
+	pPanelUI->AddChild(pBtnUI);
 
-	AddObject(pUI, GROUP_TYPE::UI);
+	AddObject(pPanelUI, GROUP_TYPE::UI);
 
 
 
