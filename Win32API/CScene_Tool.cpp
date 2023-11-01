@@ -27,11 +27,15 @@ void CScene_Tool::Enter()
 	//UI 하나 만들기
 	Vec2 vResolution = CCore::GetInst()->GetResolution();
 
-	CUI* pUI = new CUI;
+	CUI* pUI = new CUI(false);
+
+	pUI->SetName(L"ParentUI");
 	pUI->SetScale(Vec2(500.f,300.f));
 	pUI->SetPos(Vec2(vResolution.x - pUI->GetScale().x,0.f));
 
-	CUI* pChildUi = new CUI;
+	CUI* pChildUi = new CUI(false);
+
+	pChildUi->SetName(L"ChildUI");
 	pChildUi->SetScale(Vec2(100.f, 40.f));
 	pChildUi->SetPos(Vec2(0.f, 0.f));
 	
