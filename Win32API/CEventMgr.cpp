@@ -4,7 +4,7 @@
 #include "CObject.h"
 #include "CSceneMgr.h"
 #include "CScene.h"
-
+#include "CUIMgr.h"
 
 CEventMgr::CEventMgr()
 {
@@ -60,7 +60,10 @@ void CEventMgr::Excute(const tEvent& _eve)
 		
 	case EVENT_TYPE::SCENE_CHANGE: // lParam : Next Scene Type
 	{
+		// Scene변경
 		CSceneMgr::GetInst()->ChangeScene((SCENE_TYPE)_eve.lParam);
+		// UI 포커스 해제 (이전 UI 포커싱해봐야함)
+		CUIMgr::GetInst()->SetFocusedUI(nullptr);
 	}
 		break;
 

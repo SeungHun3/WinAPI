@@ -58,7 +58,7 @@ void CUIMgr::update()
 void CUIMgr::SetFocusedUI(CUI* _pUI)
 {
 	// 이미 포커싱 중인 경우 or 포커싱 해제요청인 경우
-	if (m_pFocusedUI == _pUI || nullptr == m_pFocusedUI)
+	if (m_pFocusedUI == _pUI || nullptr == _pUI)
 	{
 		m_pFocusedUI = _pUI;
 		return;

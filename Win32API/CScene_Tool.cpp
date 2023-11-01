@@ -14,6 +14,8 @@
 #include "CBtnUI.h"
 
 
+void ChangeScene(DWORD_PTR, DWORD_PTR);
+
 CScene_Tool::CScene_Tool()
 {
 }
@@ -36,19 +38,21 @@ void CScene_Tool::Enter()
 	pPanelUI->SetScale(Vec2(500.f,300.f));
 	pPanelUI->SetPos(Vec2(vResolution.x - pPanelUI->GetScale().x,0.f));
 
-	CUI* pBtnUI = new CBtnUI;
+	CBtnUI* pBtnUI = new CBtnUI;
 
 	pBtnUI->SetName(L"ChildUI");
 	pBtnUI->SetScale(Vec2(100.f, 40.f));
 	pBtnUI->SetPos(Vec2(0.f, 0.f));
-	
+	//pBtnUI->SetClickedCallBack(ChangeScene, 0, 0);
 	pPanelUI->AddChild(pBtnUI);
 
 	AddObject(pPanelUI, GROUP_TYPE::UI);
 
-
+	//복사본 UI
 	CUI* pClonePanel = pPanelUI->Clone();
 	pClonePanel->SetPos(pClonePanel->GetPos() + Vec2(-300.f, 0.f));
+	((CBtnUI*)pClonePanel->GetChildUI()[0])->SetClickedCallBack(ChangeScene, 0, 0);
+
 	AddObject(pClonePanel, GROUP_TYPE::UI);
 
 
@@ -60,6 +64,7 @@ void CScene_Tool::Enter()
 
 void CScene_Tool::Exit()
 {
+	DeleteAll();
 }
 
 
@@ -104,7 +109,10 @@ void CScene_Tool::SetTileIdx()
 	}
 }
 
-
+void ChangeScene(DWORD_PTR, DWORD_PTR)
+{
+	ChangeScene(SCENE_TYPE::START);
+}
 
 //타일 카운트 윈도우 프로시져
 //CALLBACK == __stdcall
