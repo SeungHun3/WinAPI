@@ -75,6 +75,21 @@
     <Filter Include="Engine\05.Scene\Scene_Tool">
       <UniqueIdentifier>{f823d7b9-267e-446e-899f-0c4a36a6f960}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\07.Component\Animator">
+      <UniqueIdentifier>{951321d3-b35c-4533-82b2-b57ad0489bba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component\Animator\Animation">
+      <UniqueIdentifier>{63d71a93-be35-4d40-9841-5c08c0312151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component\Collider">
+      <UniqueIdentifier>{8cf506a9-4eb6-4268-98ff-e611948aa161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\Camera">
+      <UniqueIdentifier>{285482bc-4f6f-46cc-a6e3-7e390d10ad01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Tile">
+      <UniqueIdentifier>{7e98c0ac-6267-45e6-a6ab-ed6f4b1b3866}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CObject.h">
@@ -128,9 +143,6 @@
     <ClInclude Include="CSceneMgr.h">
       <Filter>Engine\03.Manager\SceneMgr</Filter>
     </ClInclude>
-    <ClInclude Include="CCollider.h">
-      <Filter>Engine\07.Component</Filter>
-    </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Default</Filter>
     </ClInclude>
@@ -160,6 +172,24 @@
     </ClInclude>
     <ClInclude Include="CScene_Tool.h">
       <Filter>Engine\05.Scene\Scene_Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollider.h">
+      <Filter>Engine\07.Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimation.h">
+      <Filter>Engine\07.Component\Animator\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimator.h">
+      <Filter>Engine\07.Component\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="CCamera.h">
+      <Filter>Engine\03.Manager\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CTile.h">
+      <Filter>Engine\04.Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>Engine\01.Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -211,9 +241,6 @@
     <ClCompile Include="CSceneMgr.cpp">
       <Filter>Engine\03.Manager\SceneMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CCollider.cpp">
-      <Filter>Engine\07.Component</Filter>
-    </ClCompile>
     <ClCompile Include="SelectGDI.cpp">
       <Filter>Engine\08.Module</Filter>
     </ClCompile>
@@ -228,6 +255,21 @@
     </ClCompile>
     <ClCompile Include="CScene_Tool.cpp">
       <Filter>Engine\05.Scene\Scene_Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollider.cpp">
+      <Filter>Engine\07.Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimation.cpp">
+      <Filter>Engine\07.Component\Animator\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimator.cpp">
+      <Filter>Engine\07.Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="CCamera.cpp">
+      <Filter>Engine\03.Manager\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CTile.cpp">
+      <Filter>Engine\04.Object\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

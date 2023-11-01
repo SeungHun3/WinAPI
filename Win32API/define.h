@@ -27,11 +27,13 @@
 
 #define PI 3.1415926535f
 
+#define TILE_SIZE 32
 
 enum class GROUP_TYPE
 {
 	DEFALUT, // 0
-	PLAYER,	 // 1
+	TILE,
+	PLAYER,	 
 	MONSTER,
 
 	PROJ_PLAYER, // 플레이어 미사일
