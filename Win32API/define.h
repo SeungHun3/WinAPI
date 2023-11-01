@@ -39,6 +39,7 @@ enum class GROUP_TYPE
 	PROJ_PLAYER, // 플레이어 미사일
 	PROJ_MONSTER, // 몬스터 미사일
 
+	UI = 31,
 	END = 32,
 };
 

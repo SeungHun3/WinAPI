@@ -93,6 +93,9 @@
     <Filter Include="Default\리소스 파일">
       <UniqueIdentifier>{c92bfd3b-52c5-44f0-973b-c160252eff72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\UI">
+      <UniqueIdentifier>{04b44768-d191-4dda-8009-9a0c8b3e13e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CObject.h">
@@ -194,6 +197,9 @@
     <ClInclude Include="global.h">
       <Filter>Engine\01.Header</Filter>
     </ClInclude>
+    <ClInclude Include="CUI.h">
+      <Filter>Engine\04.Object\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32API.cpp">
@@ -273,6 +279,9 @@
     </ClCompile>
     <ClCompile Include="CTile.cpp">
       <Filter>Engine\04.Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI.cpp">
+      <Filter>Engine\04.Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

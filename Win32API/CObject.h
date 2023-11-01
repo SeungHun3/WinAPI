@@ -1,5 +1,5 @@
 #pragma once
-
+#include "global.h"
 #include "CCamera.h"
 
 class CCollider;
@@ -48,7 +48,7 @@ private:
 
 public:
 	virtual void update() = 0; // 자식클래스에 update함수 강제시키기
-	virtual void finalupdate() final; // 자식 클래스에서 오버라이딩하지 않고 final선언된 함수만 구동하게끔처리
+	virtual void finalupdate(); // 자식 클래스에서 오버라이딩하지 않고 final선언된 함수만 구동하게끔처리
 	virtual void render(HDC _dc);
 
 	void component_render(HDC _dc);

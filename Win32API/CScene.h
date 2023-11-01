@@ -9,10 +9,17 @@ private:
 	// vector에 포인터클래스를 담는 이유: 앞으로 파생될 부모클래스를 담아 범용성을 높이기 위한 용도
 	vector<CObject*> m_arrObj[(UINT)GROUP_TYPE::END]; // 오브젝트를 그룹개수만큼 선언
 	wstring m_strName; // Scene 이름
+	
+	UINT m_iTileX; //타일 가로갯수
+	UINT m_iTileY; //타일 세로갯수
+
 
 public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
 	const wstring& GetName() { return m_strName; }
+
+	UINT GetTileX() { return m_iTileX; }
+	UINT GetTileY() { return m_iTileY; }
 
 	virtual void update();
 	virtual void finalupdate();
@@ -24,6 +31,7 @@ public:
 	virtual void Exit() = 0;  // 탈출시 호출
 
 public:
+
 	void AddObject(CObject* _pObj, GROUP_TYPE _eType) // 인라인 함수 작성시 다른곳에서 호출해도 해당 스택에서 호출되어 호출비용없음
 	{
 		m_arrObj[(UINT)_eType].push_back(_pObj);
@@ -33,6 +41,7 @@ public:
 	void DeleteGroup(GROUP_TYPE _eTarget);
 	void DeleteAll();
 
+	void CreateTile(UINT _iXCount, UINT _YCount);
 
 public:
 	CScene();
