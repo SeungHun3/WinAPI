@@ -90,6 +90,9 @@
     <Filter Include="Engine\04.Object\Tile">
       <UniqueIdentifier>{7e98c0ac-6267-45e6-a6ab-ed6f4b1b3866}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Default\리소스 파일">
+      <UniqueIdentifier>{c92bfd3b-52c5-44f0-973b-c160252eff72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CObject.h">
@@ -273,16 +276,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Win32API.rc">
-      <Filter>Default</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="small.ico">
-      <Filter>Default</Filter>
+      <Filter>Default\리소스 파일</Filter>
     </Image>
     <Image Include="Win32API.ico">
-      <Filter>Default</Filter>
+      <Filter>Default\리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Win32API.rc">
+      <Filter>Default\리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

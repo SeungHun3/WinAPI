@@ -151,6 +151,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 }
 
 
+INT_PTR CALLBACK TileCountProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) // wParam = 키보드 입력 값 , LParam = 마우스 좌표 = 총 4바이트 // 2바이트씩 x,y 좌표 => 비트연산
 {
     switch (message) // 메세지가 없으면 화면을 그리지 않는다는 문제 => 강제로 메세지를 발생시키는 방법: 핸들러 전역변수로 설정 -> 타이머호출 or PeekMessage 호출
@@ -163,6 +165,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         {
         case IDM_ABOUT:
             DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+            break;
+        case ID_MENU_TILE:
+            DialogBox(hInst, MAKEINTRESOURCE(IDD_TILE_COUNT), hWnd, TileCountProc);
             break;
         case IDM_EXIT:
             DestroyWindow(hWnd);
