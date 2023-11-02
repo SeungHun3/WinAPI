@@ -8,11 +8,11 @@ class CPathMgr
 	SINGLE(CPathMgr)
 
 private:
-	wchar_t m_szContentPath[255]; // 윈도우에서 경로가 255로 제한되어있음
-
+	wchar_t m_szContentPath[256]; // 윈도우에서 경로가 256로 제한되어있음
+	wchar_t m_szRelativePath[256];
 public:
 	void init();
 	const wchar_t* GetContentPath() { return m_szContentPath; }
-
+	wstring GetRelativePath(const wchar_t* _filepath); // 상대경로 만들기
 };
 

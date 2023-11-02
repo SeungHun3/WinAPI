@@ -77,11 +77,11 @@ void CScene_Tool::update()
 	if (KEY_TAP(KEY::LSHIFT))
 	{
 		//CUIMgr::GetInst()->SetFocusedUI(m_pUI);
-		SaveTile(L"tile\\Test.tile");
+		SaveTileData();
 	}
 	if (KEY_TAP(KEY::CTRL))
 	{
-		LoadTile(L"tile\\Test.tile");
+		LoadTileData();
 	}
 
 }
@@ -115,14 +115,41 @@ void CScene_Tool::SetTileIdx()
 	}
 }
 
-void CScene_Tool::SaveTile(const wstring& _strRelativePath)
+void CScene_Tool::SaveTileData()
 {
-	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
-	strFilePath += _strRelativePath;
+	wchar_t szName[256] = {};
 
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = CCore::GetInst()->GetMainHwnd();
+	ofn.lpstrFile = szName;
+	ofn.nMaxFile = sizeof(szName);
+	ofn.lpstrFilter = L"ALL\0*.*\0Tile\0*.tile\0";
+	ofn.nFilterIndex = 0; // 기본 All로 설정 1 = tile
+	ofn.lpstrFileTitle = nullptr;
+	ofn.nMaxFileTitle = 0;
+
+	wstring strTileFolder = CPathMgr::GetInst()->GetContentPath();
+	strTileFolder += L"tile";
+	ofn.lpstrInitialDir = strTileFolder.c_str(); //창이 떳을때 초기경로
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; //경로와 파일이 반드시 존재해야함
+
+
+	//Modal 방식 = 해당창이 포커싱이 되어 다른 창들은 구동되지 않음 => 리턴값 못받음
+	if (GetSaveFileName(&ofn)) // 저장: true, 취소: false
+	{
+		//내가 저장한 파일이름은 szName에 담긴다(절대경로 포함)
+		SaveTile(szName);
+	}
+
+}
+
+void CScene_Tool::SaveTile(const wstring& _strFilePath)
+{
 	// FILE = 커널 오브젝트
 	FILE* pFile = nullptr;
-	_wfopen_s(&pFile, strFilePath.c_str(),L"wb"); // 모드: w 쓰기, r 읽기
+	_wfopen_s(&pFile, _strFilePath.c_str(),L"wb"); // 모드: w 쓰기, r 읽기
 	assert(pFile); // nullptr이라면 파일 쓰기 실패
 
 	// 데이터 저장
@@ -144,6 +171,37 @@ void CScene_Tool::SaveTile(const wstring& _strRelativePath)
 
 
 	fclose(pFile);
+}
+
+void CScene_Tool::LoadTileData()
+{
+	wchar_t szName[256] = {};
+
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = CCore::GetInst()->GetMainHwnd();
+	ofn.lpstrFile = szName;
+	ofn.nMaxFile = sizeof(szName);
+	ofn.lpstrFilter = L"ALL\0*.*\0Tile\0*.tile\0";
+	ofn.nFilterIndex = 0; // 기본 All로 설정 1 = tile
+	ofn.lpstrFileTitle = nullptr;
+	ofn.nMaxFileTitle = 0;
+
+	wstring strTileFolder = CPathMgr::GetInst()->GetContentPath();
+	strTileFolder += L"tile";
+	ofn.lpstrInitialDir = strTileFolder.c_str(); //창이 떳을때 초기경로
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; //경로와 파일이 반드시 존재해야함
+
+
+	//Modal 방식 = 해당창이 포커싱이 되어 다른 창들은 구동되지 않음 => 리턴값 못받음
+	if (GetOpenFileName(&ofn)) // 저장: true, 취소: false
+	{
+		//내가 저장한 파일이름은 szName에 담긴다(절대경로 포함)
+		wstring strRelativePath = CPathMgr::GetInst()->GetRelativePath(szName);
+		//상대경로로 넣어주기
+		LoadTile(strRelativePath);
+	}
 }
 
 void ChangeScene(DWORD_PTR, DWORD_PTR)

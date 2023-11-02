@@ -17,8 +17,6 @@ void CPathMgr::init()
 	// 해결 : 속성 디버깅에서 모든 구성으로 변경 후 작업디렉토리 $(ProjectDir) 를 $(SolutionDir)Output\bin\ 으로 바꿔줌
 	// => 여기서 상위경로 이동 후 bin\\content\\ 로 경로 잡기
 
-
-
 	int iLen = (int)wcslen(m_szContentPath);
 	//상위폴더로 	//문자열 변환 '\\' => '\0'
 	for (int i = iLen - 1; i >= 0; --i) // 문자열 뒤에서부터 탐색
@@ -31,7 +29,17 @@ void CPathMgr::init()
 	}
 
 	wcscat_s(m_szContentPath, 255, L"\\bin\\content\\"); // \0문자 찾아서 뒤에 문자열 붙이기
-	//SetWindowText(CCore::GetInst()->GetMainHwnd(), m_szContentPath);
 
+	//SetWindowText(CCore::GetInst()->GetMainHwnd(), m_szContentPath); //위도우창에 확인해보기
+}
 
+wstring CPathMgr::GetRelativePath(const wchar_t* _filepath)
+{
+	wstring strFilePath = _filepath;
+	size_t AbsLen = wcslen(m_szContentPath);
+	size_t iFullLen = strFilePath.length();
+
+	wstring strRelativePath = strFilePath.substr(AbsLen, iFullLen - AbsLen);
+
+	return strRelativePath;
 }
