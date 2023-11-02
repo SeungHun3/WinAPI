@@ -31,10 +31,11 @@
 
 enum class GROUP_TYPE
 {
+	//렌더링 순서
 	DEFALUT, // 0
 	TILE,
-	PLAYER,	 
 	MONSTER,
+	PLAYER,	 
 
 	PROJ_PLAYER, // 플레이어 미사일
 	PROJ_MONSTER, // 몬스터 미사일

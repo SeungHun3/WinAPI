@@ -28,6 +28,7 @@ CPlayer::CPlayer()
 
 
 	CTexture* pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\link_0.bmp");
+	//CTexture* pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player_A.png");
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"WALK_DOWN", pTex, Vec2(0.f, 260.f), Vec2(60.f, 65.f), Vec2(60.f, 0.f), 0.1f, 10);
 	GetAnimator()->Play(L"WALK_DOWN",true);
@@ -81,7 +82,30 @@ void CPlayer::render(HDC _dc)
 {
 
 	// 컴포넌트가 있는경우 렌더
-	component_render(_dc);
+	//component_render(_dc);
+
+	CTexture* pTex = CResMgr::GetInst()->LoadTexture(L"Plane",L"texture\\Player_A.bmp");
+	
+	Vec2 vPos = GetPos();
+	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+	
+	float width = (float)pTex->Width();
+	float height = (float)pTex->Height();
+	
+	BLENDFUNCTION bf = {};
+	bf.BlendOp = AC_SRC_OVER;
+	bf.BlendFlags = 0;
+	bf.AlphaFormat = AC_SRC_ALPHA;
+	bf.SourceConstantAlpha = 127;
+	
+	AlphaBlend(_dc
+		, (int)(vPos.x - width / 2.f)
+		, (int)(vPos.y - height / 2.f)
+		, (int)width
+		, (int)height
+		, pTex->GetDC()
+		, 0, 0, width, height
+		, bf);
 
 }
 
