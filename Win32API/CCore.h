@@ -19,17 +19,23 @@ private:
 	HPEN m_arrPen[(UINT)PEN_TYPE::END];
 
 
+	//메뉴
+	HMENU m_hMenu; // Tool Scene에서만 사용
+
 public:
 	int init(HWND _hwnd, POINT _ptResolution);
 	void progress();
 
 private:
+	void Clear();
 	void CreateBrushPen();
 
 public:
 	HWND GetMainHwnd() { return m_hwnd; }
 	POINT GetResolution() { return m_ptResolution; }
 	HDC GetMainDC() { return m_hDC; }
+	HMENU GetMenu() { return m_hMenu; }
+
 	HBRUSH GetBrush(BRUSH_TYPE _eType) { return m_arrBrush[(UINT)_eType]; }
 	HPEN GetPen(PEN_TYPE _eType) { return m_arrPen[(UINT)_eType]; }
 };

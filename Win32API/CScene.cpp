@@ -95,8 +95,6 @@ void CScene::render_tile(HDC _dc)
 	int iLTRow = (int)vLeftTop.y / iTileSize;
 
 
-
-
 	int iClientWidth = ((int)vResolution.x / iTileSize) + 1;
 	int iClientHeight = ((int)vResolution.y / iTileSize) + 1;
 
@@ -104,17 +102,12 @@ void CScene::render_tile(HDC _dc)
 	{
 		for (int iCurCol = iLTCol; iCurCol < (iLTCol + iClientWidth); ++iCurCol)
 		{
-			if (iCurCol < 0 || m_iTileX <= iCurCol
-				|| iCurRow < 0 || m_iTileY <= iCurRow)
+			if (iCurCol < 0 || (int)m_iTileX <= iCurCol
+				|| iCurRow < 0 || (int)m_iTileY <= iCurRow)
 			{
 				continue;
 			}
-
-
 			int iIdx = (m_iTileX * iCurRow) + iCurCol;
-
-
-
 			vecTile[iIdx]->render(_dc);
 		}
 	}

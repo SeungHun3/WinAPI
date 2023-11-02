@@ -1,21 +1,42 @@
 #pragma once
 #include "CObject.h"
+
+
+struct tMonInfo
+{
+    float m_iHP;
+    float m_fSpeed;
+    float m_fRecogRange; // 인지범위
+    float m_fAttRange;   //공격 사거리
+    float m_fAtt;        // 공격력
+};
+
+
+
+
+class AI;
+
 class CMonster :
     public CObject
 {
 
 private:
-    float m_fSpeed;
-    Vec2 m_vCenterPos;
-    float m_fMaxdistance;
-    int m_iDir; // 진행방향 1 or -1
+    tMonInfo m_tInfo;
+    AI* m_pAI;
 
-    int m_iHP;
+
 public:
-    float GetSpeed() { return m_fSpeed; }
-    void SetSpeed(float _f) { m_fSpeed = _f; }
-    void SetMoveDistance(float _f) { m_fMaxdistance = _f; }
-    void SetCenterPos(Vec2 _vPos) { m_vCenterPos = _vPos; }
+    float GetSpeed() { return m_tInfo.m_fSpeed; }
+    void SetSpeed(float _f) { m_tInfo.m_fSpeed = _f; }
+
+    void SetAI(AI* _pAI);
+
+private:
+
+    void SetMonInfo(const tMonInfo& _info)
+    {
+        m_tInfo = _info;
+    }
 
 
 public:
@@ -29,5 +50,7 @@ public:
 public:
     CMonster();
     ~CMonster();
+
+    friend class CMonFactory;
 };
 

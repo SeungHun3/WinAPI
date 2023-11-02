@@ -14,6 +14,9 @@
 #include "CKeyMgr.h"
 #include "CSceneMgr.h"
 #include "CCamera.h"
+#include "AI.h"
+#include "CIdleState.h"
+#include "CTraceState.h"
 
 CScene_Start::CScene_Start()
 {
@@ -62,26 +65,12 @@ void CScene_Start::Enter()
 
 
 
-	////Monster
-	//선언과 동시에 대입을 하면 복사생성자가 호출 => struct.h 34줄 생성자 호출
 	Vec2 vResolution = CCore::GetInst()->GetResolution();
-	CMonster* pMonsterObj = nullptr;
 
-	int iMonCount = 3;
-	float fMoveDist = 25.f;
-	float fObjScale = 50.f;
-	float fTerm = (vResolution.x - ((fMoveDist + fObjScale / 2.f) * 2)) / (float)(iMonCount - 1);
+	//Monster Event생성
+	CMonster* pMon = CMonFactory::CreateMonster(MON_TYPE::NORMAL, vResolution / 2.f - Vec2(0.f, 300.f));
+	AddObject(pMon, GROUP_TYPE::MONSTER);
 
-	for (int i = 0; i < iMonCount; i++)
-	{
-		CMonster* pMonsterObj = new CMonster;
-		pMonsterObj->SetName(L"Monster");
-		pMonsterObj->SetPos(Vec2((fMoveDist + fObjScale / 2.f) + (float)i * fTerm, 50.f));
-		pMonsterObj->SetCenterPos(pMonsterObj->GetPos());
-		pMonsterObj->SetMoveDistance(fMoveDist);
-		pMonsterObj->SetScale(Vec2(fObjScale, fObjScale));
-		AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
-	}
 	//타일 로딩
 	//LoadTile(L"tile\\Start.tile");
 
@@ -90,7 +79,6 @@ void CScene_Start::Enter()
 	// Player 그룹과 Monster 그룹간의 충돌체크
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::PLAYER, GROUP_TYPE::MONSTER);
 	CCollisionMgr::GetInst()->CheckGroup(GROUP_TYPE::MONSTER, GROUP_TYPE::PROJ_PLAYER);
-
 
 	//카메라 Look지정
 	CCamera::GetInst()->SetLookAt(vResolution / 2.f);

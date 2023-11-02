@@ -57,6 +57,7 @@ enum class SCENE_TYPE
 enum class BRUSH_TYPE
 {
 	HOLLOW,
+	BLACK,
 	END,
 };
 enum class PEN_TYPE
@@ -65,7 +66,7 @@ enum class PEN_TYPE
 	GREEN,
 	BLUE,
 
-	END
+	END,
 };
 
 enum class EVENT_TYPE
@@ -73,6 +74,18 @@ enum class EVENT_TYPE
 	CREATE_OBJECT,
 	DELETE_OBJECT,
 	SCENE_CHANGE,
+
+	END,
+};
+
+enum class MON_STATE
+{
+	IDLE,
+	PATROL,
+	TRACE,
+	ATT,
+	RUN,
+	DEAD,
 
 	END,
 };

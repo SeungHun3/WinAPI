@@ -1,5 +1,5 @@
 #pragma once
-
+#include "CMonFactory.h"
 
 class CObject; // 클래스 전방선언 = 전처리, 컴파일러, 어셈블러 통한 후 링커로 넘겨 매칭시킴, 클래스에 대한 구체적인 정보는 없는 상태 -> 포인터 타입으로 사용
 
