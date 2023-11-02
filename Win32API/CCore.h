@@ -1,6 +1,8 @@
 #pragma once
 // 클래스 자체를 데이터영역에 보내 싱글톤 패턴으로 설계
 
+class CTexture;
+
 class CCore
 {
 	SINGLE(CCore);
@@ -10,9 +12,7 @@ private:
 	POINT m_ptResolution; // 메인 윈도우 해상도
 	HDC m_hDC; // 메인 윈도우에 Draw할 DC
 
-	//비트맵: 윈도우에서 모든 픽셀을 저장하고 있는 데이터
-	HBITMAP m_hBit; // 사본용 비트맵
-	HDC m_memDC; // 사본용 DC
+	CTexture* m_pMemTex; // 백버퍼 텍스쳐
 
 	// 자주 사용하는 GDI Object Grapic Device Interface Object
 	HBRUSH m_arrBrush[(UINT)BRUSH_TYPE::END];

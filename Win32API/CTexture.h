@@ -14,6 +14,7 @@ private:
 
 public:
     void Load(const wstring& _strFilePath); // 빌드경로변경: 프로젝트 속성 => 출력디렉토리 변경  $(SolutionDir)Output\bin_debug
+    void Create(UINT _iWidth, UINT _iHeight);
 
     UINT Width() { return m_bitInfo.bmWidth; }
     UINT Height() { return m_bitInfo.bmHeight; }

@@ -35,6 +35,23 @@ CTexture* CResMgr::LoadTexture(const wstring& _strKey, const wstring& _strRelati
 	return pTex;
 }
 
+CTexture* CResMgr::CreateTexture(const wstring& _strKey, UINT _iWidth, UINT _iHeight)
+{
+	CTexture* pTex = FindTexture(_strKey); // 키가 중복되어 이미 있는 값이라면
+	if (nullptr != pTex)
+	{
+		return pTex; // 바로 반환
+	}
+
+	pTex = new CTexture;
+	pTex->Create(_iWidth, _iHeight);
+	pTex->SetKey(_strKey);
+
+	m_mapTex.insert(make_pair(_strKey, pTex));
+
+	return pTex;
+}
+
 CTexture* CResMgr::FindTexture(const wstring& _strKey)
 {
 	map<wstring, CRes*>::iterator iter = m_mapTex.find(_strKey);

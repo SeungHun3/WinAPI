@@ -2,22 +2,34 @@
 #include "CCamera.h"
 #include "CObject.h"
 #include "CCore.h"
+
+#include "CCore.h"
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
+#include "CResMgr.h"
+#include "CTexture.h"
+
 
 CCamera::CCamera()
 	: m_pTargetObj(nullptr)
 	, m_fTime(0.5f)
 	, m_fSpeed(0.f)
 	, m_fAccTime(0.5f)
+	, m_pVeilTex(nullptr)
 {
-
+	
 }
 CCamera::~CCamera()
 {
 
 }
 
+
+void CCamera::init()
+{
+	Vec2 vResolution = CCore::GetInst()->GetResolution();
+	m_pVeilTex = CResMgr::GetInst()->CreateTexture(L"CameraVeil",(UINT)vResolution.x, (UINT)vResolution.y);
+}
 
 void CCamera::update()
 {
@@ -45,6 +57,59 @@ void CCamera::update()
 
 	// 화면 중앙좌표와 카메라 LookAt 차이값
 	CalDiff();
+}
+
+void CCamera::render(HDC _dc)
+{
+	if (m_listCamEffect.empty())
+		return;
+
+
+	// 시간 누적 값 체크해서
+	tCamEffect& effect = m_listCamEffect.front();
+	effect.m_fCurTime += fDT;
+
+	float fRatio = 0.f; // 이펙트 진행비율
+	fRatio = effect.m_fCurTime / effect.m_fDuration;
+	if (fRatio < 0.f)
+		fRatio = 0.f;
+	if (fRatio > 1.f)
+		fRatio = 1.f;
+
+
+	int iAlpha = 0;
+
+	if (CAM_EFFECT::FADE_OUT == effect.eEffect)
+	{	
+		iAlpha = (int)(255.f * fRatio);
+	}
+	else if (CAM_EFFECT::FADE_IN == effect.eEffect)
+	{
+		iAlpha = (int)(255.f * (1 - fRatio));
+	}
+
+
+	
+
+	BLENDFUNCTION bf = {};
+	bf.BlendOp = AC_SRC_OVER;
+	bf.BlendFlags = 0;
+	bf.AlphaFormat = 0; // AC_SRC_ALPHA : 소스에 있는 알파값으로 소스가 없으니 직접 값넣어준다
+	bf.SourceConstantAlpha = iAlpha; //알파 강도조절 0~255
+
+	AlphaBlend(_dc, 0, 0, (int)m_pVeilTex->Width(), (int)m_pVeilTex->Height()
+		, m_pVeilTex->GetDC(), 0, 0, (int)m_pVeilTex->Width(), (int)m_pVeilTex->Height()
+		, bf);
+
+
+
+	// 진행 시간이 이펙트 최대시간을 넘어선 경우
+	if (effect.m_fDuration < effect.m_fCurTime)
+	{
+		// 효과종료
+		m_listCamEffect.pop_front();
+		return;
+	}
 }
 
 void CCamera::CalDiff()

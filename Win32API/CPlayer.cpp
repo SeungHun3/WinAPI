@@ -96,7 +96,7 @@ void CPlayer::render(HDC _dc)
 	bf.BlendOp = AC_SRC_OVER;
 	bf.BlendFlags = 0;
 	bf.AlphaFormat = AC_SRC_ALPHA;
-	bf.SourceConstantAlpha = 127;
+	bf.SourceConstantAlpha = 127; //알파 강도조절 0~255
 	
 	AlphaBlend(_dc
 		, (int)(vPos.x - width / 2.f)
@@ -104,7 +104,7 @@ void CPlayer::render(HDC _dc)
 		, (int)width
 		, (int)height
 		, pTex->GetDC()
-		, 0, 0, width, height
+		, 0, 0, (int)width, (int)height
 		, bf);
 
 }

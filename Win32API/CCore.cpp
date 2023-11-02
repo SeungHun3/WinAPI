@@ -9,14 +9,14 @@
 #include "CEventMgr.h"
 #include "CCamera.h"
 #include "CUIMgr.h"
+#include "CResMgr.h"
+#include "CTexture.h"
 
 
 CCore::CCore()
 	: m_hwnd(0)
 	, m_ptResolution{}
 	, m_hDC(0)
-	, m_hBit(0)
-	, m_memDC(0)
 	, m_arrBrush{}
 	, m_arrPen{}
 {
@@ -25,9 +25,7 @@ CCore::CCore()
 CCore::~CCore()
 {
 	ReleaseDC(m_hwnd, m_hDC); // 싱글톤 객체로 데이터 영역의 메모리를 사용, 소멸자 호출되는시점 : 프로그램 종료
-	DeleteDC(m_memDC);
-	DeleteObject(m_hBit); // delete를 구분지어있는 이유는 정확히는 모름(메모리관련 예상) : 공식 문서에서 요구하는데로 틀 맞춤 
-
+	
 	//생성한 Pen 지우기
 	for (int i = 0; i < (UINT)PEN_TYPE::END; ++i)
 	{
@@ -55,15 +53,8 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 
 	m_hDC = GetDC(m_hwnd); // 윈도우가 보유하고 있는 비트맵을 DC의 목적지로 삼겠다
 
-	// 이중버퍼링 용도의 비트맵과 DC를 만든다
-	m_hBit = CreateCompatibleBitmap(m_hDC, m_ptResolution.x, m_ptResolution.y); // m_hDC의 m_ptResolution해상도로 비트맵 만들기
-	m_memDC = CreateCompatibleDC(m_hDC); // m_hDC의 호환성있는 DC 만들기 => 사본 비트맵을 하나 만들었으니 사본을 타겟으로 하는 그림그려줄 DC가 필요해서 
-	//현재 사본 비트맵과 사본 DC의 접점은 없는 상태
-
-	HBITMAP hOldBit = (HBITMAP)SelectObject(m_memDC, m_hBit); // 사본 비트맵,DC접점 만들어줌 == m_memDC의 타겟설정: m_hBit
-	//DC가 디폴트로 가지고 있는 타겟은 1pixel 의미없는 비트맵으로 Select를 하면 의미없는 해당 비트맵이 반환됨 
-	DeleteObject(hOldBit);
-	// 지움(m_memDC 생성시 디폴트로된 의미없는 비트맵)
+	// 이중버퍼링 용도의 비트맵과 DC를 만든다 => 텍스쳐한장을 만든다
+	m_pMemTex = CResMgr::GetInst()->CreateTexture(L"BackBuffer",(UINT)m_ptResolution.x, (UINT)m_ptResolution.y);
 
 	//자주 사용하는 펜 및 브러쉬 생성
 	CreateBrushPen();
@@ -72,8 +63,8 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 	CPathMgr::GetInst()->init();
 	CTimeMgr::GetInst()->init();
 	CKeyMgr::GetInst()->init();
+	CCamera::GetInst()->init();
 	CSceneMgr::GetInst()->init();
-
 	return S_OK;
 }
 
@@ -99,11 +90,12 @@ void CCore::progress()
 
 	//Rendering	
 	//화면 Clear
-	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
+	Rectangle(m_pMemTex->GetDC(), -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
 
-	CSceneMgr::GetInst()->render(m_memDC);
+	CSceneMgr::GetInst()->render(m_pMemTex->GetDC());
+	CCamera::GetInst()->render(m_pMemTex->GetDC());
 
-	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
+	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_pMemTex->GetDC(), 0, 0, SRCCOPY);
 
 	CTimeMgr::GetInst()->render();
 

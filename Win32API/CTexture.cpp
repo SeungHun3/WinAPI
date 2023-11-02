@@ -33,10 +33,18 @@ void CTexture::Load(const wstring& _strFilePath)
 	GetObject(m_hBit, sizeof(BITMAP), &m_bitInfo); // 오브젝트에 대한 정보를 알려주는 함수 // 파일로 부터 받은 오브젝트 ,저장받을 사이즈,  정보를 받을 주소
 	//m_bitInfo.bmWidth;
 	//m_bitInfo.bmHeight;
+}
 
+void CTexture::Create(UINT _iWidth, UINT _iHeight)
+{
+	//비트맵 하나 만들어서 가상의 텍스쳐를 만든다
+	HDC maindc = CCore::GetInst()->GetMainDC();
 
+	m_hBit = CreateCompatibleBitmap(maindc, _iWidth, _iHeight);
+	m_dc = CreateCompatibleDC(maindc);
 
+	HBITMAP hOldBit = (HBITMAP)SelectObject(m_dc, m_hBit);
+	DeleteObject(hOldBit);
 
-
-
+	GetObject(m_hBit, sizeof(BITMAP), &m_bitInfo);
 }
