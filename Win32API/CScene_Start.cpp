@@ -82,6 +82,9 @@ void CScene_Start::Enter()
 		pMonsterObj->SetScale(Vec2(fObjScale, fObjScale));
 		AddObject(pMonsterObj, GROUP_TYPE::MONSTER);
 	}
+	//타일 로딩
+	//LoadTile(L"tile\\Start.tile");
+
 
 	// 충돌지정
 	// Player 그룹과 Monster 그룹간의 충돌체크
