@@ -39,25 +39,27 @@ void CScene_Tool::Enter()
 	pPanelUI->SetScale(Vec2(300.f,150.f));
 	pPanelUI->SetPos(Vec2(vResolution.x - pPanelUI->GetScale().x,0.f));
 
+
 	CBtnUI* pBtnUI = new CBtnUI;
 
 	pBtnUI->SetName(L"ChildUI");
 	pBtnUI->SetScale(Vec2(100.f, 40.f));
 	pBtnUI->SetPos(Vec2(0.f, 0.f));
-	//pBtnUI->SetClickedCallBack(ChangeScene, 0, 0);
+
+	// 전역함수가 아닌 클래스 내부함수의 경우 주소를 줌 => 틀에 맞춰 캐스팅까지 해줘야함
+	((CBtnUI*)pBtnUI)->SetClickedCallBack(this, (SCENE_MEMFUNC)&CScene_Tool::SaveTileData); 
 	pPanelUI->AddChild(pBtnUI);
 
 	AddObject(pPanelUI, GROUP_TYPE::UI);
 
 	//복사본 UI
-	CUI* pClonePanel = pPanelUI->Clone();
-	pClonePanel->SetPos(pClonePanel->GetPos() + Vec2(-300.f, 0.f));
-	((CBtnUI*)pClonePanel->GetChildUI()[0])->SetClickedCallBack(ChangeScene, 0, 0);
-
-	AddObject(pClonePanel, GROUP_TYPE::UI);
-
-
-	m_pUI = pClonePanel;
+	//CUI* pClonePanel = pPanelUI->Clone();
+	//pClonePanel->SetPos(pClonePanel->GetPos() + Vec2(-300.f, 0.f));
+	//((CBtnUI*)pClonePanel->GetChildUI()[0])->SetClickedCallBack(ChangeScene, 0, 0);
+	//
+	//AddObject(pClonePanel, GROUP_TYPE::UI);
+	//
+	//m_pUI = pClonePanel;
 
 	//카메라 Look지정
 	CCamera::GetInst()->SetLookAt(vResolution / 2.f);
@@ -74,11 +76,11 @@ void CScene_Tool::update()
 	CScene::update(); // 부모함수 호출
 	SetTileIdx();
 
-	if (KEY_TAP(KEY::LSHIFT))
-	{
-		//CUIMgr::GetInst()->SetFocusedUI(m_pUI);
-		SaveTileData();
-	}
+	//if (KEY_TAP(KEY::LSHIFT))
+	//{
+	//	//CUIMgr::GetInst()->SetFocusedUI(m_pUI);
+	//	SaveTileData();
+	//}
 	if (KEY_TAP(KEY::CTRL))
 	{
 		LoadTileData();
