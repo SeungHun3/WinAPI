@@ -97,14 +97,6 @@ void CScene_Start::Enter()
 
 	CCamera::GetInst()->FadeOut(1.f);
 	CCamera::GetInst()->FadeIn(1.f);
-	CCamera::GetInst()->FadeOut(1.f);
-	CCamera::GetInst()->FadeIn(1.f);
-	CCamera::GetInst()->FadeOut(1.f);
-	CCamera::GetInst()->FadeIn(1.f);
-	CCamera::GetInst()->FadeOut(1.f);
-	CCamera::GetInst()->FadeIn(1.f);
-	CCamera::GetInst()->FadeOut(1.f);
-	CCamera::GetInst()->FadeIn(1.f);
 }
 
 
