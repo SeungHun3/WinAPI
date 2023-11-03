@@ -2,6 +2,8 @@
 
 class AI;
 
+class CMonster;
+
 class CState
 {
 
@@ -13,6 +15,7 @@ private:
 public:
 	AI* GetAI() { return m_pAI; }
 	MON_STATE GetType() { return m_eState; }
+	CMonster* GetMonster();
 
 public:
 	virtual void update() = 0;

@@ -28,8 +28,7 @@ CScene_Tool::~CScene_Tool()
 void CScene_Tool::Enter()
 {
 	// 메뉴바 생성
-	SetMenu(CCore::GetInst()->GetMainHwnd(), CCore::GetInst()->GetMenu());
-
+	CCore::GetInst()->DockMenu();
 
 	//타일생성
 	CreateTile(5, 5);
@@ -71,8 +70,8 @@ void CScene_Tool::Enter()
 
 void CScene_Tool::Exit()
 {
-	SetMenu(CCore::GetInst()->GetMainHwnd(),nullptr); //윈도우에 있는 메뉴바를 nullptr로(삭제)
-
+	//메뉴바 분리
+	CCore::GetInst()->DivideMenu();
 	DeleteAll();
 }
 

@@ -31,10 +31,13 @@ private:
 	void CreateBrushPen();
 
 public:
+	void DockMenu();
+	void DivideMenu();
+	void ChangeWindowSize(Vec2 _vReSolution, bool _bMenu);
+public:
 	HWND GetMainHwnd() { return m_hwnd; }
 	POINT GetResolution() { return m_ptResolution; }
 	HDC GetMainDC() { return m_hDC; }
-	HMENU GetMenu() { return m_hMenu; }
 
 	HBRUSH GetBrush(BRUSH_TYPE _eType) { return m_arrBrush[(UINT)_eType]; }
 	HPEN GetPen(PEN_TYPE _eType) { return m_arrPen[(UINT)_eType]; }

@@ -13,6 +13,9 @@ private:
 	UINT m_iTileX; //타일 가로갯수
 	UINT m_iTileY; //타일 세로갯수
 
+	CObject* m_pPlayer; // 씬이 보유하고 있는 플레이어
+
+
 
 public:
 	void SetName(const wstring& _strName) { m_strName = _strName; }
@@ -20,6 +23,9 @@ public:
 
 	UINT GetTileX() { return m_iTileX; }
 	UINT GetTileY() { return m_iTileY; }
+
+	CObject* GetPlayer() { return m_pPlayer; }
+
 
 	virtual void update();
 	virtual void finalupdate();
@@ -39,6 +45,9 @@ public:
 	{
 		m_arrObj[(UINT)_eType].push_back(_pObj);
 	}
+
+	void ResisterPlayer(CObject* _pPlayer) { m_pPlayer = _pPlayer; }
+
 
 	const vector<CObject*>& GetGroupObject(GROUP_TYPE _eType) { return m_arrObj[(UINT)_eType]; } // 그룹 자체를 리턴
 	void DeleteGroup(GROUP_TYPE _eTarget);

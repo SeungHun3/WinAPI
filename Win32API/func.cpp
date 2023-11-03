@@ -34,3 +34,14 @@ void ChangeScene(SCENE_TYPE _eNext)
 
 	CEventMgr::GetInst()->AddEvent(even);
 }
+
+void ChangeAIState(AI* _pAI, MON_STATE _eNextState)
+{
+	tEvent even = {};
+
+	even.eEvent = EVENT_TYPE::CHANGE_AI_STATE;
+	even.lParam = (DWORD_PTR)_pAI;
+	even.wParam = (DWORD_PTR)_eNextState;
+
+	CEventMgr::GetInst()->AddEvent(even);
+}

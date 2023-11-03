@@ -45,10 +45,7 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 
 	// 초기해상도 사용자가 모름
 	// 해상도 직접 설정하여 윈도우 크기조정 , 타이틀창+ 메뉴바 포함된 모든 픽셀을 말함(윈도우 버전마다 다름)
-	RECT rt = { 0,0,m_ptResolution.x,m_ptResolution.y };
-	AdjustWindowRect(&rt, WS_OVERLAPPED, false); // 윈도우크기를 내가 지정한 사이즈로 잡을 수 있게 크기정보를 먼저 얻음 // 현재 메뉴바가 있으니 감안해서 계산하기위해 true로 넣음 
-	
-	SetWindowPos(m_hwnd, nullptr, 100, 100, rt.right - rt.left, rt.bottom - rt.top, 0);//변경할 윈도우객체 ,...
+	ChangeWindowSize(Vec2((float)_ptResolution.x, (float)_ptResolution.y), false);
 
 	// 메뉴바 정보 얻기
 	m_hMenu = LoadMenu(nullptr, MAKEINTRESOURCE(IDC_WIN32API));
@@ -120,4 +117,24 @@ void CCore::CreateBrushPen()
 	m_arrPen[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));	
 	m_arrPen[(UINT)PEN_TYPE::BLUE] = CreatePen(PS_SOLID, 1, RGB(0,0, 255));
 	m_arrPen[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, 1, RGB(0,255,0));
+}
+
+void CCore::DockMenu()
+{
+	SetMenu(m_hwnd, m_hMenu);
+	ChangeWindowSize(GetResolution(), true);
+}
+
+void CCore::DivideMenu()
+{
+	SetMenu(m_hwnd, nullptr);
+	ChangeWindowSize(GetResolution(), false);
+}
+
+void CCore::ChangeWindowSize(Vec2 _vReSolution, bool _bMenu)
+{
+	RECT rt = { 0,0,(long)_vReSolution.x,(long)_vReSolution.y };
+	// 윈도우크기를 내가 지정한 사이즈로 잡을 수 있게 크기정보를 먼저 얻음 // 메뉴바여부 _bMenu  
+	AdjustWindowRect(&rt, WS_OVERLAPPED, _bMenu); 
+	SetWindowPos(m_hwnd, nullptr, 100, 100, rt.right - rt.left, rt.bottom - rt.top, 0);//변경할 윈도우객체 ,...
 }

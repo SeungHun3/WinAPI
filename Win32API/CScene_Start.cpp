@@ -55,6 +55,7 @@ void CScene_Start::Enter()
 	pObj->SetScale(Vec2(100.f, 100.f));
 	AddObject(pObj, GROUP_TYPE::PLAYER);
 
+	ResisterPlayer(pObj);
 	////복사 생성자를 이용한 개체복사
 	//CObject* pOtherPlayer = pObj->Clone(); //new CPlayer(*(CPlayer*)pObj);
 	//pOtherPlayer->SetPos(Vec2(440.f, 384.f));
