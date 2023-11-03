@@ -25,6 +25,7 @@ CMonster::~CMonster()
 
 void CMonster::update()
 {
+	if(nullptr != m_pAI)
 	m_pAI->update();
 }
 

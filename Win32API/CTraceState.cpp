@@ -27,7 +27,12 @@ void CTraceState::update()
 	Vec2 vMonPos = GetMonster()->GetPos();
 
 	Vec2 vMonDir = vPlayerPos - vMonPos;
+	if (0.f == vMonDir.Length())
+	{
+		return;
+	}
 	vMonDir.Normalize();
+
 	vMonPos += vMonDir * GetMonster()->GetInfo().m_fSpeed * fDT;
 	GetMonster()->SetPos(vMonPos);
 

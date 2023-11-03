@@ -15,6 +15,10 @@ private:
 	// F = M * A
 	// V += A * DT
 
+	float m_fFricCoeff; // 마찰 계수
+	float m_fMaxSpeed; // 최대속도 : 물체의 저항을 물리로 표현하기 어려워 속도제한을 걸어둠
+
+
 public:
 	void finalupdate();
 
@@ -29,6 +33,11 @@ public:
 		m_fMass = _fMass;
 	}
 	float GetMass() { return m_fMass; }
+
+	void SetVelocity(Vec2 _v) { m_vVelocity = _v; }
+	void SetMaxVelocity(float _fSpeed) { m_fMaxSpeed = _fSpeed; }
+	void AddVelocity(Vec2 _v) { m_vVelocity += _v; }
+
 
 private:
 	void Move();

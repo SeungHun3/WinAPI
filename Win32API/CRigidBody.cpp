@@ -7,9 +7,11 @@
 CRigidBody::CRigidBody()
 	: m_pOwner(nullptr)
 	, m_fMass(1.f)
+	, m_fFricCoeff(50.f)
+	, m_fMaxSpeed(200.f)
 {	  
 }	  
-Vec2 m_vVelocity;
+
 CRigidBody::~CRigidBody()
 {
 }
@@ -22,16 +24,43 @@ void CRigidBody::finalupdate()
 	if (0.f != fForce)
 	{
 		// 힘의 방향
-		Vec2 vDir = m_vForce;
-		vDir.Normalize();
-		// 가속도의 크기
-		float fAccel = fForce / m_fMass;
-
+		//Vec2 vDir = m_vForce;
+		//	vDir.Normalize();
+		//// 가속도의 크기
+		//float fAccel = fForce / m_fMass;
+		 
 		// 가속도
 		m_vAccel = m_vForce / m_fMass;  // == vDir * fAccel;
-
 		// 속도
 		m_vVelocity += m_vAccel * fDT;
+	}
+
+
+	// 마찰, 저항 붙이기
+	if (!m_vVelocity.IsZero())
+	{
+		Vec2 vFricDir = -m_vVelocity;
+		vFricDir.Normalize();
+
+
+		// 마찰력에 의한 반대방향으로의 가속도 적용
+		Vec2 vFriction = vFricDir * m_fFricCoeff * fDT;
+		if (m_vVelocity.Length() <= vFriction.Length())
+		{
+			// 마찰 가속도가 본래속도보다 큰 경우 
+			m_vVelocity = Vec2(0.f, 0.f);
+		}
+		else
+		{
+			m_vVelocity += vFriction;
+		}
+	}
+
+	// 속도제한 검사 : 저항
+	if (m_fMaxSpeed < m_vVelocity.Length())
+	{
+		m_vVelocity.Normalize(); // 방향 유지 후 
+		m_vVelocity *= m_fMaxSpeed; // 속력 붙인다
 	}
 
 	// 속도에 따른 이동
