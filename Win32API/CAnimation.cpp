@@ -9,7 +9,7 @@
 CAnimation::CAnimation()
 	: m_pAnimator(nullptr)
 	, m_pTex(nullptr)
-	, m_iCurFrm(2)
+	, m_iCurFrm(0)
 	, m_fAccTime(0.f)
 	, m_bFinish(false)
 {
@@ -52,6 +52,9 @@ void CAnimation::render(HDC _dc)
 	vPos += m_vecFrm[m_iCurFrm].vOffset; // Object에 Offset 만큼 추가이동위치 (다리기준 중심좌표 = 애니매이션 위로 올리기)
 
 	vPos = CCamera::GetInst()->GetRenderPos(vPos);
+
+
+
 
 	TransparentBlt(_dc
 		, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f	)

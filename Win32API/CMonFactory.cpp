@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "CMonFactory.h"
 #include "AI.h"
+#include "CRigidBody.h"
 #include "CMonster.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
+
 
 
 CMonster* CMonFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
@@ -26,15 +28,19 @@ CMonster* CMonFactory::CreateMonster(MON_TYPE _eType, Vec2 _vPos)
 		info.m_iHP = 100.f;
 		info.m_fSpeed = 150.f;
 
-
 		pMon->SetMonInfo(info);
-
 
 		AI* pAI = new AI;
 		pAI->AddState(new CIdleState);
 		pAI->AddState(new CTraceState);
 		pAI->SetCurState(MON_STATE::IDLE);
 		pMon->SetAI(pAI);
+
+
+		pMon->CreateRigidBody();
+		pMon->GetRigidBody()->SetMass(1.f);
+
+
 	}
 		break;
 	case MON_TYPE::RANGE:
