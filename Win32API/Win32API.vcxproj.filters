@@ -96,6 +96,42 @@
     <Filter Include="Engine\04.Object\UI">
       <UniqueIdentifier>{04b44768-d191-4dda-8009-9a0c8b3e13e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03.Manager\UIMgr">
+      <UniqueIdentifier>{8e00397e-23a8-4624-be63-5c684ffc5c24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\UI\Panel">
+      <UniqueIdentifier>{5fe3c234-d944-424b-985c-27977b0b82a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\UI\BtnUI">
+      <UniqueIdentifier>{8f328cb2-579a-47de-a225-ad755708edc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI">
+      <UniqueIdentifier>{27d157a6-c1ee-4f83-b834-02240380fcb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State">
+      <UniqueIdentifier>{ba356fa6-1479-47a5-a58c-a77b9e4af8c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State\Idle">
+      <UniqueIdentifier>{6169afea-4899-44c4-800d-7554539f471b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State\Attack">
+      <UniqueIdentifier>{115ccb97-cc90-497a-be63-c3ec721d4a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State\Dead">
+      <UniqueIdentifier>{a00b810c-1674-45c2-bf46-bbb7bd7e8be1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\08.Module\AI\State\Trace">
+      <UniqueIdentifier>{3ab558d5-5fa9-445d-a8bd-888cb7dcc49e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09.Factory">
+      <UniqueIdentifier>{52178947-bc8a-443d-9d96-c39e86eab41b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09.Factory\MonFactory">
+      <UniqueIdentifier>{fc35100c-9778-49f9-8683-02f99886dac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component\RigidBody">
+      <UniqueIdentifier>{0fc6945b-e0d4-479d-881b-169e83b5f6ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CObject.h">
@@ -200,11 +236,35 @@
     <ClInclude Include="CUI.h">
       <Filter>Engine\04.Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="CUIMgr.h">
+      <Filter>Engine\03.Manager\UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CPanelUI.h">
+      <Filter>Engine\04.Object\UI\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="CBtnUI.h">
+      <Filter>Engine\04.Object\UI\BtnUI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Engine\08.Module\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Engine\08.Module\AI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CIdleState.h">
+      <Filter>Engine\08.Module\AI\State\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="CTraceState.h">
+      <Filter>Engine\08.Module\AI\State\Trace</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonFactory.h">
+      <Filter>Engine\09.Factory\MonFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CRigidBody.h">
+      <Filter>Engine\07.Component\RigidBody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Win32API.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="CObject.cpp">
       <Filter>Engine\04.Object</Filter>
     </ClCompile>
@@ -282,6 +342,36 @@
     </ClCompile>
     <ClCompile Include="CUI.cpp">
       <Filter>Engine\04.Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIMgr.cpp">
+      <Filter>Engine\03.Manager\UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CPanelUI.cpp">
+      <Filter>Engine\04.Object\UI\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="CBtnUI.cpp">
+      <Filter>Engine\04.Object\UI\BtnUI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Engine\08.Module\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>Engine\08.Module\AI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>Engine\08.Module\AI\State\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="CTraceState.cpp">
+      <Filter>Engine\08.Module\AI\State\Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonFactory.cpp">
+      <Filter>Engine\09.Factory\MonFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="CRigidBody.cpp">
+      <Filter>Engine\07.Component\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32API.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

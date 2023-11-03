@@ -3,12 +3,14 @@
 
 #include "CCollider.h"
 #include "CAnimator.h"
+#include "CRigidBody.h"
 
 CObject::CObject()
 	: m_vPos{}
 	, m_vScale{}
 	, m_pCollider(nullptr)
 	, m_pAnimator(nullptr)
+	, m_pRigidBody(nullptr)
 	, m_bAlive(true)
 {
 }
@@ -19,6 +21,7 @@ CObject::CObject(const CObject& _origin)
 	, m_vScale(_origin.m_vScale)
 	, m_pCollider(nullptr)
 	, m_pAnimator(nullptr)
+	, m_pRigidBody(nullptr)
 	, m_bAlive(true)
 {
 	if (_origin.m_pCollider)
@@ -32,6 +35,11 @@ CObject::CObject(const CObject& _origin)
 		m_pAnimator = new CAnimator(*_origin.m_pAnimator);
 		m_pAnimator->m_pOwner = this;
 	}
+	if (_origin.m_pRigidBody)
+	{
+		m_pRigidBody = new CRigidBody(*_origin.m_pRigidBody);
+		m_pRigidBody->m_pOwner = this;
+	}
 }
 
 CObject::~CObject()
@@ -44,6 +52,10 @@ CObject::~CObject()
 	if (nullptr != m_pAnimator)
 	{
 		delete m_pAnimator;
+	}
+	if (nullptr != m_pRigidBody)
+	{
+		delete m_pRigidBody;
 	}
 }
 
@@ -59,6 +71,11 @@ void CObject::finalupdate()
 	{
 		m_pAnimator->finalupdate();
 	}
+	if (m_pRigidBody)
+	{
+		m_pRigidBody->finalupdate();
+	}
+
 }
 
 void CObject::render(HDC _dc)
@@ -100,4 +117,10 @@ void CObject::CreateAnimator()
 	m_pAnimator = new CAnimator;
 	m_pAnimator->m_pOwner = this;
 
+}
+
+void CObject::CreateRigidBody()
+{
+	m_pRigidBody = new CRigidBody;
+	m_pRigidBody->m_pOwner = this;
 }
