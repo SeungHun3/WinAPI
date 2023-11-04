@@ -15,7 +15,7 @@ private:
 	UINT m_iID; // 충돌체의 고유한 ID값
 	UINT m_iCol;
 
-
+	bool m_bActive; // 활성화여부
 
 
 public:

@@ -16,18 +16,21 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 #include "CRigidBody.h"
+#include "CGravity.h"
 
 
 CPlayer::CPlayer()
 	: m_eCurState(PLAYER_STATE::IDLE)
+	, m_ePrevState(PLAYER_STATE::IDLE)
+	, m_iPrevDir(1)
 	, m_iDir(1)
 {
 	// Texture 로딩하기
 	//m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player.bmp");
 
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 10.f));
-	GetCollider()->SetScale(Vec2(200.f, 200.f));
+	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+	GetCollider()->SetScale(Vec2(25.f, 25.f));
 
 	CreateRigidBody();
 
@@ -45,12 +48,15 @@ CPlayer::CPlayer()
 	GetAnimator()->CreateAnimation(L"WALK_RIGHT", pLeftTex, Vec2(0.f, 85.f), Vec2(45.f, 50.f), Vec2(60.f, 0.f), 0.15f, 8);
 	GetAnimator()->CreateAnimation(L"WALK_LEFT", pRightTex, Vec2(555.f, 85.f), Vec2(45.f, 50.f), Vec2(-60.f, 0.f), 0.15f, 8);
 
-	GetAnimator()->Play(L"WALK_RIGHT",true);
+	GetAnimator()->Play(L"IDLE_RIGHT",true);
 
 	//// 애니매이션 오프셋
 	//CAnimation* pAnim = GetAnimator()->FindAnimation(L"WALK_DOWN");
 	//for(UINT i = 0; i< pAnim->GetMaxFrame(); ++i)
 	//pAnim->GetFrame(i).vOffset = Vec2(0.f, -20.f);
+
+	//중력 컴포넌트
+	CreateGravity();
 
 }
 
@@ -77,6 +83,7 @@ void CPlayer::update()
 	GetAnimator()->update();
 
 	m_ePrevState = m_eCurState;
+	m_iPrevDir = m_iDir;
 }
 
 void CPlayer::render(HDC _dc)
@@ -130,16 +137,21 @@ void CPlayer::update_state()
 	if (KEY_TAP(KEY::A))
 	{
 		m_iDir = -1;
-		m_eCurState = PLAYER_STATE::WALK;
 	}
 	if (KEY_TAP(KEY::D))
 	{
 		m_iDir = 1;
-		m_eCurState = PLAYER_STATE::WALK;
 	}
-	if (KEY_NONE(KEY::A) && KEY_NONE(KEY::D))
+	
+	float fXLen = abs(GetRigidBody()->GetVelocity().x);
+	
+	if (0.5f > fXLen)
 	{
 		m_eCurState = PLAYER_STATE::IDLE;
+	}
+	else
+	{
+		m_eCurState = PLAYER_STATE::WALK;
 	}
 
 }
@@ -150,16 +162,6 @@ void CPlayer::update_move()
 
 	CRigidBody* pRigid = GetRigidBody();
 
-	if (KEY_HOLD(KEY::W))
-	{
-		//vPos.y -= 200.f * fDT;
-		pRigid->AddForce(Vec2(0.f, -200.f));
-	}
-	if (KEY_HOLD(KEY::S))
-	{
-		//vPos.y += 200.f * fDT;
-		pRigid->AddForce(Vec2(0.f, 200.f));
-	}
 	if (KEY_HOLD(KEY::A))
 	{
 		//vPos.x -= 200.f * fDT;
@@ -171,15 +173,6 @@ void CPlayer::update_move()
 		pRigid->AddForce(Vec2(200.f, 0.f));
 	}
 
-
-	if (KEY_TAP(KEY::W))
-	{
-		pRigid->AddVelocity(Vec2(0.f, -100.f));
-	}
-	if (KEY_TAP(KEY::S))
-	{
-		pRigid->AddVelocity(Vec2(0.f, 100.f));
-	}
 	if (KEY_TAP(KEY::A))
 	{
 		pRigid->AddVelocity(Vec2(-100.f, 0.f));
@@ -194,7 +187,7 @@ void CPlayer::update_move()
 
 void CPlayer::update_animation()
 {
-	if (m_ePrevState == m_eCurState)
+	if (m_ePrevState == m_eCurState && m_iPrevDir == m_iDir)
 	{
 		return;
 	}
@@ -203,7 +196,7 @@ void CPlayer::update_animation()
 	{
 	case PLAYER_STATE::IDLE:
 	{
-		if (m_iDir>0)
+		if (m_iDir >0)
 		{
 			GetAnimator()->Play(L"IDLE_RIGHT", true);
 		}
@@ -217,7 +210,7 @@ void CPlayer::update_animation()
 		break;
 	case PLAYER_STATE::WALK:
 	{
-		if (m_iDir>0)
+		if (m_iDir >0)
 		{
 			GetAnimator()->Play(L"WALK_RIGHT", true);
 		}
@@ -236,4 +229,10 @@ void CPlayer::update_animation()
 	default:
 		break;
 	}
+
+}
+
+void CPlayer::update_gravity()
+{
+	GetRigidBody()->AddForce(Vec2(0.f,500.f));
 }

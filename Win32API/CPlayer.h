@@ -8,6 +8,7 @@ enum class PLAYER_STATE
     IDLE,
     WALK,
     ATTACK,
+    JUMP,
     DEAD,
 
 };
@@ -37,6 +38,7 @@ public:
     PLAYER_STATE m_eCurState;
     PLAYER_STATE m_ePrevState;
     int m_iDir;
+    int m_iPrevDir;
 
 private:
     void CreateMissile();
@@ -44,6 +46,7 @@ private:
     void update_state();
     void update_move();
     void update_animation();
+    void update_gravity();
 
     CLONE(CPlayer);
 

@@ -34,6 +34,7 @@ enum class GROUP_TYPE
 	//·»´õ¸µ ¼ø¼­
 	DEFALUT, // 0
 	TILE,
+	GROUND,
 	MONSTER,
 	PLAYER,	 
 

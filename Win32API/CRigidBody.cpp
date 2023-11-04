@@ -31,10 +31,14 @@ void CRigidBody::finalupdate()
 		 
 		// 가속도
 		m_vAccel = m_vForce / m_fMass;  // == vDir * fAccel;
-		// 속도
-		m_vVelocity += m_vAccel * fDT;
+
 	}
 
+	// 추가 가속도 붙이기(중력,, 등등)
+	m_vAccel += m_vAccelA;
+
+	// 속도
+	m_vVelocity += m_vAccel * fDT;
 
 	// 마찰, 저항 붙이기
 	if (!m_vVelocity.IsZero())
@@ -69,6 +73,10 @@ void CRigidBody::finalupdate()
 
 	// 힘 초기화
 	m_vForce = Vec2(0.f, 0.f);
+	// 가속도 초기화
+	m_vAccel = Vec2(0.f, 0.f);
+	// 추가 가속도 초기화
+	m_vAccelA = Vec2(0.f, 0.f);
 }
 
 void CRigidBody::Move()

@@ -9,6 +9,7 @@ private:
 
 	Vec2 m_vForce; // 크기, 방향
 	Vec2 m_vAccel; // 가속도
+	Vec2 m_vAccelA; // 가속도 추가값
 	float m_fMass; // 질량  ==> 힘 = 질량*가속도
 	Vec2 m_vVelocity; // 속도 : 방향 + 속력
 
@@ -33,11 +34,14 @@ public:
 		m_fMass = _fMass;
 	}
 	float GetMass() { return m_fMass; }
+	float GetSpeed() { return m_vVelocity.Length(); }
+	
 
+	Vec2 GetVelocity() { return m_vVelocity; }
 	void SetVelocity(Vec2 _v) { m_vVelocity = _v; }
-	void SetMaxVelocity(float _fSpeed) { m_fMaxSpeed = _fSpeed; }
 	void AddVelocity(Vec2 _v) { m_vVelocity += _v; }
-
+	void SetMaxVelocity(float _fSpeed) { m_fMaxSpeed = _fSpeed; }
+	void SetAccelAlpha(Vec2 _vAccelA) { m_vAccelA = _vAccelA; }
 
 private:
 	void Move();

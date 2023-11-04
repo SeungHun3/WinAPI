@@ -54,8 +54,6 @@ void CAnimation::render(HDC _dc)
 	vPos = CCamera::GetInst()->GetRenderPos(vPos);
 
 
-
-
 	TransparentBlt(_dc
 		, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f	)
 		, (int)(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f)
@@ -67,6 +65,28 @@ void CAnimation::render(HDC _dc)
 		, (int)(m_vecFrm[m_iCurFrm].vSlice.x)				
 		, (int)(m_vecFrm[m_iCurFrm].vSlice.y)
 		, RGB(255, 0, 255));
+	
+
+	// 알파넣는 코드
+	
+	// BLENDFUNCTION bf = {};
+	//bf.BlendOp = AC_SRC_OVER;
+	//bf.BlendFlags = 0;
+	//bf.AlphaFormat = AC_SRC_ALPHA;
+	//bf.SourceConstantAlpha = 127; //알파 강도조절 0~255
+	//
+	// 
+	//AlphaBlend(_dc
+	//, (int)(vPos.x - m_vecFrm[m_iCurFrm].vSlice.x / 2.f)
+	//	, (int)(vPos.y - m_vecFrm[m_iCurFrm].vSlice.y / 2.f)
+	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.x)
+	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.y)
+	//	, m_pTex->GetDC()
+	//	, (int)(m_vecFrm[m_iCurFrm].vLT.x)
+	//	, (int)(m_vecFrm[m_iCurFrm].vLT.y)
+	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.x)
+	//	, (int)(m_vecFrm[m_iCurFrm].vSlice.y)
+	//	, bf);
 }
 
 void CAnimation::Create(CTexture* _pTex, Vec2 _vLT, Vec2 _vSliceSize, Vec2 _vStep, float _fDuration, UINT _iFrameCount)
