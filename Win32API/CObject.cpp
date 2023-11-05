@@ -74,10 +74,7 @@ CObject::~CObject()
 
 void CObject::finalupdate()
 {
-	if (m_pCollider)
-	{
-		m_pCollider->finalupdate();
-	}
+	
 
 	if (m_pAnimator)
 	{
@@ -91,7 +88,10 @@ void CObject::finalupdate()
 	{
 		m_pRigidBody->finalupdate();
 	}
-
+	if (m_pCollider)
+	{
+		m_pCollider->finalupdate();
+	}
 }
 
 void CObject::render(HDC _dc)

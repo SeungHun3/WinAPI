@@ -82,10 +82,10 @@ void CScene_Start::update()
 
 
 
-	if (KEY_TAP(KEY::ENTER))
-	{
-		ChangeScene(SCENE_TYPE::TOOL);
-	}
+	//if (KEY_TAP(KEY::ENTER))
+	//{
+	//	ChangeScene(SCENE_TYPE::TOOL);
+	//}
 
 	// 카메라 마우스 클릭위치로 움직임
 	//if (KEY_TAP(KEY::LBTN))
@@ -157,8 +157,9 @@ void CScene_Start::Enter()
 
 	// Ground 배치
 	CObject* pGround = new CGround;
+	pGround->SetName(L"Ground");
 	pGround->SetPos(Vec2(640.f, 584.f));
-	pGround->SetScale(Vec2(200.f, 60.f));
+	pGround->SetScale(Vec2(600.f, 60.f));
 	AddObject(pGround, GROUP_TYPE::GROUND);
 
 

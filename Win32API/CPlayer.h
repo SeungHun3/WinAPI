@@ -23,7 +23,6 @@ enum class PLAYER_STATE
 //};
 
 
-
 class CTexture;
 
 class CPlayer :
@@ -47,6 +46,8 @@ private:
     void update_move();
     void update_animation();
     void update_gravity();
+
+    virtual void OnCollisionEnter(CCollider* _pOther);
 
     CLONE(CPlayer);
 

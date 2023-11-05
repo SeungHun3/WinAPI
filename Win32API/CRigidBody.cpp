@@ -8,7 +8,7 @@ CRigidBody::CRigidBody()
 	: m_pOwner(nullptr)
 	, m_fMass(1.f)
 	, m_fFricCoeff(50.f)
-	, m_fMaxSpeed(200.f)
+	, m_vMaxVelocity(Vec2(200.f,600.f))
 {	  
 }	  
 
@@ -61,10 +61,13 @@ void CRigidBody::finalupdate()
 	}
 
 	// 속도제한 검사 : 저항
-	if (m_fMaxSpeed < m_vVelocity.Length())
+	if (abs(m_vMaxVelocity.x < m_vVelocity.x))
 	{
-		m_vVelocity.Normalize(); // 방향 유지 후 
-		m_vVelocity *= m_fMaxSpeed; // 속력 붙인다
+		m_vVelocity.x = abs(m_vMaxVelocity.x / abs(m_vVelocity.x))* abs(m_vMaxVelocity.x);
+	}
+	if (abs(m_vMaxVelocity.y < m_vVelocity.y))
+	{
+		m_vVelocity.y = abs(m_vMaxVelocity.y / abs(m_vVelocity.y)) * abs(m_vMaxVelocity.y);
 	}
 
 	// 속도에 따른 이동
