@@ -42,6 +42,7 @@ public:
 	{
 		x = (float)_pt.x;
 		y = (float)_pt.y;
+		return *this;
 	}
 	Vec2 operator +(Vec2 _vOther)
 	{

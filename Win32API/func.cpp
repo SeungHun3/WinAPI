@@ -65,3 +65,18 @@ void LoadWString(wstring& _str, FILE* _pFile)
 	
 	_str = szBuff;
 }
+
+void FScanf(char* _outBuff, FILE* _pFile)
+{
+	int i = 0;
+	while (true)
+	{
+		char c = (char)getc(_pFile);
+		if (c == '\n')
+		{
+			_outBuff[i++] = '\0';
+			break;
+		}
+		_outBuff[i++] = c;
+	}
+}

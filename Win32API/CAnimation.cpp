@@ -159,19 +159,21 @@ void CAnimation::Save(const wstring& _strRelativePath)
 		fprintf(pFile, "%d\n",(int)i);
 
 		fprintf(pFile, "[Left Top]\n");
-		fprintf(pFile, "%d, %d\n", (int)m_vecFrm[i].vLT.x, (int)m_vecFrm[i].vLT.y);
+		fprintf(pFile, "%d %d\n", (int)m_vecFrm[i].vLT.x, (int)m_vecFrm[i].vLT.y);
 
 		fprintf(pFile, "[Slice Size]\n");
-		fprintf(pFile, "%d, %d\n", (int)m_vecFrm[i].vSlice.x, (int)m_vecFrm[i].vSlice.y);
+		fprintf(pFile, "%d %d\n", (int)m_vecFrm[i].vSlice.x, (int)m_vecFrm[i].vSlice.y);
 
 		fprintf(pFile, "[Offset]\n");
-		fprintf(pFile, "%d, %d\n", (int)m_vecFrm[i].vOffset.x, (int)m_vecFrm[i].vOffset.y);
+		fprintf(pFile, "%d %d\n", (int)m_vecFrm[i].vOffset.x, (int)m_vecFrm[i].vOffset.y);
 
-		fprintf(pFile, "[Left Top]\n");
+		fprintf(pFile, "[Duration]\n");
 		fprintf(pFile, "%f\n", m_vecFrm[i].fDuration);
-
+		fprintf(pFile, "[Frame END]\n");
 		fprintf(pFile, "\n\n");
 	}
+
+	
 
 
 	fclose(pFile);
@@ -182,26 +184,101 @@ void CAnimation::Load(const wstring& _strRelativePath)
 	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
 	strFilePath += _strRelativePath;
 
-	// 애니매이션 이름읽기
+	
 	FILE* pFile = nullptr;
 	_wfopen_s(&pFile, strFilePath.c_str(), L"rb");
 	assert(pFile);
-	LoadWString(m_strName, pFile);
 
-	//텍스쳐
-	wstring strTexKey, strTexPath;
-	LoadWString(strTexKey, pFile);
-	LoadWString(strTexPath, pFile);
+	//// 애니매이션 이름읽기
+	//LoadWString(m_strName, pFile);
+	//
+	////텍스쳐
+	//wstring strTexKey, strTexPath;
+	//LoadWString(strTexKey, pFile);
+	//LoadWString(strTexPath, pFile);
+	//m_pTex = CResMgr::GetInst()->LoadTexture(strTexKey, strTexPath);
+	//
+	////프레임개수
+	//size_t iFrameCount = 0;
+	//fread(&iFrameCount, sizeof(size_t), 1, pFile);
+	////모든 프레임정보
+	//m_vecFrm.resize(iFrameCount);
+	//fread(m_vecFrm.data(), sizeof(tAnimFrm), iFrameCount, pFile);
+
+
+
+	//인코딩한 데이터 읽기
+	string str;
+	char szBuff[256];
+
+	FScanf(szBuff, pFile); // key
+	FScanf(szBuff, pFile); // value
+	str = szBuff;
+	m_strName = wstring(str.begin(), str.end());
+
+	FScanf(szBuff, pFile); // key
+	FScanf(szBuff, pFile); // value
+	str = szBuff;
+	wstring strTexKey = wstring(str.begin(), str.end());
+
+	FScanf(szBuff, pFile); // key
+	FScanf(szBuff, pFile); // value
+	str = szBuff;
+	wstring strTexPath = wstring(str.begin(), str.end());
+
 	m_pTex = CResMgr::GetInst()->LoadTexture(strTexKey, strTexPath);
 
+	
+	FScanf(szBuff, pFile);
+	int iFramecount = 0;
+	fscanf_s(pFile, "%d", &iFramecount);
 
+	// 프레임정보
+	tAnimFrm frm = {};
+	for (int i = 0; i < iFramecount; ++i)
+	{
+		POINT pt = {};
+		while (true)
+		{
+			FScanf(szBuff, pFile);
 
-	//프레임개수
-	size_t iFrameCount = 0;
-	fread(&iFrameCount, sizeof(size_t), 1, pFile);
-	//모든 프레임정보
-	m_vecFrm.resize(iFrameCount);
-	fread(m_vecFrm.data(), sizeof(tAnimFrm), iFrameCount, pFile);
+			if (!strcmp("[Frame Index]", szBuff)) // 문자열 비교함수 strcmp 같으면 0반환
+			{
+				fscanf_s(pFile, "%d", &pt.x);
+			}
+			else if (!strcmp("[Left Top]", szBuff))
+			{
+				fscanf_s(pFile, "%d", &pt.x);
+				fscanf_s(pFile, "%d", &pt.y);
+
+				frm.vLT = pt;
+			}
+			else if (!strcmp("[Slice Size]", szBuff))
+			{
+				fscanf_s(pFile, "%d", &pt.x);
+				fscanf_s(pFile, "%d", &pt.y);
+
+				frm.vSlice = pt;
+			}
+			else if (!strcmp("[Offset]", szBuff))
+			{
+				fscanf_s(pFile, "%d", &pt.x);
+				fscanf_s(pFile, "%d", &pt.y);
+
+				frm.vOffset = pt;
+			}
+			else if (!strcmp("[Duration]", szBuff))
+			{
+				fscanf_s(pFile, "%f", &frm.fDuration);
+			}
+			else if (!strcmp("[Frame END]", szBuff))
+			{
+				break;
+			}
+		}
+		m_vecFrm.push_back(frm);
+	}
+
 
 
 	fclose(pFile);
