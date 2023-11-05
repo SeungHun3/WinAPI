@@ -1,0 +1,34 @@
+[Animation Name]
+JUMP_RIGHT
+[Texture Name]
+PlayerRight
+[Texture Path]
+texture\Player01_R.bmp
+[Frame Count]
+2
+[Frame Index]
+0
+[Left Top]
+5 170
+[Slice Size]
+50 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+1
+[Left Top]
+65 170
+[Slice Size]
+50 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+

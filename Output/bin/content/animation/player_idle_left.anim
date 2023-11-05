@@ -1,0 +1,34 @@
+[Animation Name]
+IDLE_RIGHT
+[Texture Name]
+PlayerRight
+[Texture Path]
+texture\Player01_R.bmp
+[Frame Count]
+2
+[Frame Index]
+0
+[Left Top]
+0 0
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+2.000000
+[Frame END]
+
+
+[Frame Index]
+1
+[Left Top]
+47 0
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+2.000000
+[Frame END]
+
+

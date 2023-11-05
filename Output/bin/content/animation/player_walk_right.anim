@@ -1,0 +1,112 @@
+[Animation Name]
+WALK_LEFT
+[Texture Name]
+PlayerLeft
+[Texture Path]
+texture\Player01_L.bmp
+[Frame Count]
+8
+[Frame Index]
+0
+[Left Top]
+555 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+1
+[Left Top]
+495 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+2
+[Left Top]
+435 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+3
+[Left Top]
+375 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+4
+[Left Top]
+315 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+5
+[Left Top]
+255 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+6
+[Left Top]
+195 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+7
+[Left Top]
+135 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+

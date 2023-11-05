@@ -1,0 +1,112 @@
+[Animation Name]
+WALK_RIGHT
+[Texture Name]
+PlayerRight
+[Texture Path]
+texture\Player01_R.bmp
+[Frame Count]
+8
+[Frame Index]
+0
+[Left Top]
+0 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+1
+[Left Top]
+60 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+2
+[Left Top]
+120 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+3
+[Left Top]
+180 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+4
+[Left Top]
+240 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+5
+[Left Top]
+300 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+6
+[Left Top]
+360 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
+[Frame Index]
+7
+[Left Top]
+420 85
+[Slice Size]
+45 50
+[Offset]
+0 0
+[Duration]
+0.150000
+[Frame END]
+
+
