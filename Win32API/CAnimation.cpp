@@ -117,17 +117,61 @@ void CAnimation::Save(const wstring& _strRelativePath)
 
 	assert(pFile);
 
-	// Animation의 이름을 저장한다
-	SaveWString(m_strName, pFile);
-	// 텍스쳐
-	SaveWString(m_pTex->GetKey(),pFile);
-	SaveWString(m_pTex->GetRelativePath(), pFile);
+	//// Animation의 이름을 저장한다
+	//SaveWString(m_strName, pFile); // 바이트단위 눌러담은 데이터만 저장하여 파일 열었을때 사람이 알아보기 힘들다
+	//
+	//
+	//
+	//// 텍스쳐
+	//SaveWString(m_pTex->GetKey(),pFile);
+	//SaveWString(m_pTex->GetRelativePath(), pFile);
+	//
+	//// 프레임 개수
+	//size_t iFrameCount = m_vecFrm.size();
+	//fwrite(&iFrameCount, sizeof(size_t), 1, pFile);
+	////모든 프레임정보
+	//fwrite(m_vecFrm.data(), sizeof(tAnimFrm), iFrameCount, pFile);
 
-	// 프레임 개수
-	size_t iFrameCount = m_vecFrm.size();
-	fwrite(&iFrameCount, sizeof(size_t), 1, pFile);
-	//모든 프레임정보
-	fwrite(m_vecFrm.data(), sizeof(tAnimFrm), iFrameCount, pFile);
+
+
+	//인코딩 하기
+	fprintf(pFile, "[Animation Name]\n");
+	string strAnimName = string(m_strName.begin(), m_strName.end()); //1바이트 문자열로 변환
+	fprintf(pFile, strAnimName.c_str());// 파일을 문자열로 저장시켜주는 함수
+	fprintf(pFile, "\n");
+	
+	fprintf(pFile, "[Texture Name]\n");
+	string strTexName = string(m_pTex->GetKey().begin(), m_pTex->GetKey().end()); 
+	fprintf(pFile, strTexName.c_str());
+	fprintf(pFile, "\n");
+
+	fprintf(pFile, "[Texture Path]\n");
+	string strPath = string(m_pTex->GetRelativePath().begin(), m_pTex->GetRelativePath().end()); 
+	fprintf(pFile, strPath.c_str());
+	fprintf(pFile, "\n");
+
+	fprintf(pFile, "[Frame Count]\n");
+	fprintf(pFile, "%d\n", (int)m_vecFrm.size());
+
+	for (size_t i = 0; i < m_vecFrm.size(); ++i)
+	{
+		fprintf(pFile, "[Frame Index]\n");
+		fprintf(pFile, "%d\n",(int)i);
+
+		fprintf(pFile, "[Left Top]\n");
+		fprintf(pFile, "%d, %d\n", (int)m_vecFrm[i].vLT.x, (int)m_vecFrm[i].vLT.y);
+
+		fprintf(pFile, "[Slice Size]\n");
+		fprintf(pFile, "%d, %d\n", (int)m_vecFrm[i].vSlice.x, (int)m_vecFrm[i].vSlice.y);
+
+		fprintf(pFile, "[Offset]\n");
+		fprintf(pFile, "%d, %d\n", (int)m_vecFrm[i].vOffset.x, (int)m_vecFrm[i].vOffset.y);
+
+		fprintf(pFile, "[Left Top]\n");
+		fprintf(pFile, "%f\n", m_vecFrm[i].fDuration);
+
+		fprintf(pFile, "\n\n");
+	}
 
 
 	fclose(pFile);

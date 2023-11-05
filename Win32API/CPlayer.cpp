@@ -36,36 +36,40 @@ CPlayer::CPlayer()
 
 	
 	//CTexture* pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\link_0.bmp");
-
-	//CTexture* pLeftTex = CResMgr::GetInst()->LoadTexture(L"PlayerLeft", L"texture\\Player01_L.bmp"); 
-	//CTexture* pRightTex = CResMgr::GetInst()->LoadTexture(L"PlayerRight", L"texture\\Player01_R.bmp");
 	CreateAnimator();
-	GetAnimator()->LoadAnimation(L"animation\\player_idle_left.anim");
-	GetAnimator()->LoadAnimation(L"animation\\player_idle_right.anim");
-	
-	GetAnimator()->LoadAnimation(L"animation\\player_walk_left.anim");
-	GetAnimator()->LoadAnimation(L"animation\\player_walk_right.anim");
-	
-	GetAnimator()->LoadAnimation(L"animation\\player_jump_left.anim");
-	GetAnimator()->LoadAnimation(L"animation\\player_jump_right.anim");
 
-	//GetAnimator()->CreateAnimation(L"IDLE_RIGHT", pRightTex, Vec2(0.f, 0.f), Vec2(45.f, 50.f), Vec2(47.f, 0.f), 2.f, 2);
-	//GetAnimator()->CreateAnimation(L"IDLE_LEFT", pLeftTex, Vec2(555.f, 0.f), Vec2(45.f, 50.f), Vec2(-47.f, 0.f), 2.f, 2);
-	//
-	//GetAnimator()->CreateAnimation(L"WALK_RIGHT", pRightTex, Vec2(0.f, 85.f), Vec2(45.f, 50.f), Vec2(60.f, 0.f), 0.15f, 8);
-	//GetAnimator()->CreateAnimation(L"WALK_LEFT", pLeftTex, Vec2(555.f, 85.f), Vec2(45.f, 50.f), Vec2(-60.f, 0.f), 0.15f, 8);
-	//
-	//GetAnimator()->CreateAnimation(L"JUMP_RIGHT", pRightTex, Vec2(5.f, 170.f), Vec2(50.f, 50.f), Vec2(60.f, 0.f), 0.15f, 2);
-	//GetAnimator()->CreateAnimation(L"JUMP_LEFT", pLeftTex, Vec2(548.f, 170.f), Vec2(50.f, 50.f), Vec2(-60.f, 0.f), 0.15f, 2);
+	CTexture* pLeftTex = CResMgr::GetInst()->LoadTexture(L"PlayerLeft", L"texture\\Player01_L.bmp"); 
+	CTexture* pRightTex = CResMgr::GetInst()->LoadTexture(L"PlayerRight", L"texture\\Player01_R.bmp");
+	
 
-	//GetAnimator()->FindAnimation(L"IDLE_RIGHT")->Save(L"animation\\player_idle_left.anim");
-	//GetAnimator()->FindAnimation(L"IDLE_LEFT")->Save(L"animation\\player_idle_right.anim");
+	GetAnimator()->CreateAnimation(L"IDLE_RIGHT", pRightTex, Vec2(0.f, 0.f), Vec2(45.f, 50.f), Vec2(47.f, 0.f), 2.f, 2);
+	GetAnimator()->CreateAnimation(L"IDLE_LEFT", pLeftTex, Vec2(555.f, 0.f), Vec2(45.f, 50.f), Vec2(-47.f, 0.f), 2.f, 2);
+	
+	GetAnimator()->CreateAnimation(L"WALK_RIGHT", pRightTex, Vec2(0.f, 85.f), Vec2(45.f, 50.f), Vec2(60.f, 0.f), 0.15f, 8);
+	GetAnimator()->CreateAnimation(L"WALK_LEFT", pLeftTex, Vec2(555.f, 85.f), Vec2(45.f, 50.f), Vec2(-60.f, 0.f), 0.15f, 8);
+	
+	GetAnimator()->CreateAnimation(L"JUMP_RIGHT", pRightTex, Vec2(5.f, 170.f), Vec2(50.f, 50.f), Vec2(60.f, 0.f), 0.15f, 2);
+	GetAnimator()->CreateAnimation(L"JUMP_LEFT", pLeftTex, Vec2(548.f, 170.f), Vec2(50.f, 50.f), Vec2(-60.f, 0.f), 0.15f, 2);
+
+	GetAnimator()->FindAnimation(L"IDLE_RIGHT")->Save(L"animation\\player_idle_left.anim");
+	GetAnimator()->FindAnimation(L"IDLE_LEFT")->Save(L"animation\\player_idle_right.anim");
+	
+	GetAnimator()->FindAnimation(L"WALK_RIGHT")->Save(L"animation\\player_walk_left.anim");
+	GetAnimator()->FindAnimation(L"WALK_LEFT")->Save(L"animation\\player_walk_right.anim");
+	
+	GetAnimator()->FindAnimation(L"JUMP_RIGHT")->Save(L"animation\\player_jump_left.anim");
+	GetAnimator()->FindAnimation(L"JUMP_LEFT")->Save(L"animation\\player_jump_right.anim");
+
+
+
+	//GetAnimator()->LoadAnimation(L"animation\\player_idle_left.anim");
+	//GetAnimator()->LoadAnimation(L"animation\\player_idle_right.anim");
 	//
-	//GetAnimator()->FindAnimation(L"WALK_RIGHT")->Save(L"animation\\player_walk_left.anim");
-	//GetAnimator()->FindAnimation(L"WALK_LEFT")->Save(L"animation\\player_walk_right.anim");
+	//GetAnimator()->LoadAnimation(L"animation\\player_walk_left.anim");
+	//GetAnimator()->LoadAnimation(L"animation\\player_walk_right.anim");
 	//
-	//GetAnimator()->FindAnimation(L"JUMP_RIGHT")->Save(L"animation\\player_jump_left.anim");
-	//GetAnimator()->FindAnimation(L"JUMP_LEFT")->Save(L"animation\\player_jump_right.anim");
+	//GetAnimator()->LoadAnimation(L"animation\\player_jump_left.anim");
+	//GetAnimator()->LoadAnimation(L"animation\\player_jump_right.anim");
 
 
 	GetAnimator()->Play(L"IDLE_RIGHT",true);
