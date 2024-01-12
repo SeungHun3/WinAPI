@@ -1,15 +1,15 @@
 [Animation Name]
-IDLE_RIGHT
+IDLE_LEFT
 [Texture Name]
-PlayerRight
+PlayerLeft
 [Texture Path]
-texture\Player01_R.bmp
+texture\Player01_L.bmp
 [Frame Count]
 2
 [Frame Index]
 0
 [Left Top]
-0 0
+555 0
 [Slice Size]
 45 50
 [Offset]
@@ -22,7 +22,7 @@ texture\Player01_R.bmp
 [Frame Index]
 1
 [Left Top]
-47 0
+508 0
 [Slice Size]
 45 50
 [Offset]

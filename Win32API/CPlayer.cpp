@@ -38,8 +38,8 @@ CPlayer::CPlayer()
 	//CTexture* pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\link_0.bmp");
 	CreateAnimator();
 
-	//// 애니매이션 세이브
-	//
+	// 애니매이션 세이브
+	
 	//CTexture* pLeftTex = CResMgr::GetInst()->LoadTexture(L"PlayerLeft", L"texture\\Player01_L.bmp"); 
 	//CTexture* pRightTex = CResMgr::GetInst()->LoadTexture(L"PlayerRight", L"texture\\Player01_R.bmp");
 	//
@@ -53,26 +53,27 @@ CPlayer::CPlayer()
 	//GetAnimator()->CreateAnimation(L"JUMP_RIGHT", pRightTex, Vec2(5.f, 170.f), Vec2(50.f, 50.f), Vec2(60.f, 0.f), 0.15f, 2);
 	//GetAnimator()->CreateAnimation(L"JUMP_LEFT", pLeftTex, Vec2(548.f, 170.f), Vec2(50.f, 50.f), Vec2(-60.f, 0.f), 0.15f, 2);
 	//
-	//GetAnimator()->FindAnimation(L"IDLE_RIGHT")->Save(L"animation\\player_idle_left.anim");
-	//GetAnimator()->FindAnimation(L"IDLE_LEFT")->Save(L"animation\\player_idle_right.anim");
+	//GetAnimator()->FindAnimation(L"IDLE_RIGHT")->Save(PlayerAnimIdleRight);
+	//GetAnimator()->FindAnimation(L"IDLE_LEFT")->Save(PlayerAnimIdleLeft);
 	//
-	//GetAnimator()->FindAnimation(L"WALK_RIGHT")->Save(L"animation\\player_walk_left.anim");
-	//GetAnimator()->FindAnimation(L"WALK_LEFT")->Save(L"animation\\player_walk_right.anim");
+	//GetAnimator()->FindAnimation(L"WALK_RIGHT")->Save(PlayerAnimWalkRight);
+	//GetAnimator()->FindAnimation(L"WALK_LEFT")->Save(PlayerAnimWalkLeft);
 	//
-	//GetAnimator()->FindAnimation(L"JUMP_RIGHT")->Save(L"animation\\player_jump_left.anim");
-	//GetAnimator()->FindAnimation(L"JUMP_LEFT")->Save(L"animation\\player_jump_right.anim");
+	//GetAnimator()->FindAnimation(L"JUMP_RIGHT")->Save(PlayerAnimJumpRight);
+	//GetAnimator()->FindAnimation(L"JUMP_LEFT")->Save(PlayerAnimJumpLeft);
+
 
 
 	//애니매이션 로드
 	
-	GetAnimator()->LoadAnimation(L"animation\\player_idle_left.anim");
-	GetAnimator()->LoadAnimation(L"animation\\player_idle_right.anim");
+	GetAnimator()->LoadAnimation(PlayerAnimIdleLeft);
+	GetAnimator()->LoadAnimation(PlayerAnimIdleRight);
 	
-	GetAnimator()->LoadAnimation(L"animation\\player_walk_left.anim");
-	GetAnimator()->LoadAnimation(L"animation\\player_walk_right.anim");
+	GetAnimator()->LoadAnimation(PlayerAnimWalkLeft);
+	GetAnimator()->LoadAnimation(PlayerAnimWalkRight);
 	
-	GetAnimator()->LoadAnimation(L"animation\\player_jump_left.anim");
-	GetAnimator()->LoadAnimation(L"animation\\player_jump_right.anim");
+	GetAnimator()->LoadAnimation(PlayerAnimJumpLeft);
+	GetAnimator()->LoadAnimation(PlayerAnimJumpRight);
 
 
 	GetAnimator()->Play(L"IDLE_RIGHT",true);

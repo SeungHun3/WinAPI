@@ -1,15 +1,15 @@
 [Animation Name]
-JUMP_RIGHT
+JUMP_LEFT
 [Texture Name]
-PlayerRight
+PlayerLeft
 [Texture Path]
-texture\Player01_R.bmp
+texture\Player01_L.bmp
 [Frame Count]
 2
 [Frame Index]
 0
 [Left Top]
-5 170
+548 170
 [Slice Size]
 50 50
 [Offset]
@@ -22,7 +22,7 @@ texture\Player01_R.bmp
 [Frame Index]
 1
 [Left Top]
-65 170
+488 170
 [Slice Size]
 50 50
 [Offset]

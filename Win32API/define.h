@@ -91,3 +91,12 @@ enum class MON_STATE
 
 	END,
 };
+
+#define PlayerAnimIdleLeft L"animation\\player_idle_left.anim"
+#define PlayerAnimIdleRight L"animation\\player_idle_right.anim"
+
+#define PlayerAnimWalkLeft L"animation\\player_walk_left.anim"
+#define PlayerAnimWalkRight L"animation\\player_walk_right.anim"
+
+#define PlayerAnimJumpLeft L"animation\\player_jump_left.anim"
+#define PlayerAnimJumpRight L"animation\\player_jump_right.anim"

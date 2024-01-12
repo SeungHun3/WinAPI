@@ -1,15 +1,15 @@
 [Animation Name]
-WALK_RIGHT
+WALK_LEFT
 [Texture Name]
-PlayerRight
+PlayerLeft
 [Texture Path]
-texture\Player01_R.bmp
+texture\Player01_L.bmp
 [Frame Count]
 8
 [Frame Index]
 0
 [Left Top]
-0 85
+555 85
 [Slice Size]
 45 50
 [Offset]
@@ -22,7 +22,7 @@ texture\Player01_R.bmp
 [Frame Index]
 1
 [Left Top]
-60 85
+495 85
 [Slice Size]
 45 50
 [Offset]
@@ -35,7 +35,7 @@ texture\Player01_R.bmp
 [Frame Index]
 2
 [Left Top]
-120 85
+435 85
 [Slice Size]
 45 50
 [Offset]
@@ -48,7 +48,7 @@ texture\Player01_R.bmp
 [Frame Index]
 3
 [Left Top]
-180 85
+375 85
 [Slice Size]
 45 50
 [Offset]
@@ -61,7 +61,7 @@ texture\Player01_R.bmp
 [Frame Index]
 4
 [Left Top]
-240 85
+315 85
 [Slice Size]
 45 50
 [Offset]
@@ -74,7 +74,7 @@ texture\Player01_R.bmp
 [Frame Index]
 5
 [Left Top]
-300 85
+255 85
 [Slice Size]
 45 50
 [Offset]
@@ -87,7 +87,7 @@ texture\Player01_R.bmp
 [Frame Index]
 6
 [Left Top]
-360 85
+195 85
 [Slice Size]
 45 50
 [Offset]
@@ -100,7 +100,7 @@ texture\Player01_R.bmp
 [Frame Index]
 7
 [Left Top]
-420 85
+135 85
 [Slice Size]
 45 50
 [Offset]
